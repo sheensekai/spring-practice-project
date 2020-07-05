@@ -1,7 +1,12 @@
 package com.example.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -17,9 +22,6 @@ public class User {
     private String email;
     private long passwordHash;
 
-    public User() {
-    }
-
     public User(long id, String userName, String email, long passwordHash) {
         this.id = id;
         this.userName = userName;
@@ -27,35 +29,4 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(long passwordHash) {
-        this.passwordHash = passwordHash;
-    }
 }
