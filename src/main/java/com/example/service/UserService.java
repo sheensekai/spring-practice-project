@@ -20,4 +20,15 @@ public class UserService {
         User newUser = new User(id, userName, email, passwordHash);
         return this.userRepository.save(newUser).getUserId();
     }
+
+    public UserModel getUserById(long id) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
+
+        String userName = user.getUserName();
+        String email = user.getEmail();
+        long passwordHash = user.getPasswordHash();
+
+        return new UserModel(id, userName, email, passwordHash);
+    }
 }
