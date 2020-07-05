@@ -1,16 +1,37 @@
 package com.example.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "username")
     private String userName;
+
+    @Column(name = "email")
     private String email;
     private long passwordHash;
 
-    public int getId() {
+    public User() {
+    }
+
+    public User(long id, String userName, String email, long passwordHash) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
