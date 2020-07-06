@@ -14,13 +14,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/users")
-    public int  addUser(@RequestBody UserDTO user) {
-        int id = user.getId();
+    public int addUser(@RequestBody UserDTO user) {
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        UserModel newUser = new UserModel(id, userName, email, passwordHash);
+        UserModel newUser = new UserModel(userName, email, passwordHash);
         return this.userService.addUser(newUser);
     }
 
@@ -29,11 +28,10 @@ public class UserController {
         throws ResourceNotFoundException {
         UserModel user = this.userService.getUserById(userId);
 
-        int id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        return new UserDTO(id, userName, email, passwordHash);
+        return new UserDTO(userName, email, passwordHash);
     }
 }
