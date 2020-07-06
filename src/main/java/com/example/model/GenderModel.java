@@ -1,5 +1,7 @@
 package com.example.model;
 
+import com.example.dto.GenderDTO;
+import com.example.entities.Gender;
 import com.example.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +13,13 @@ public class GenderModel {
 
     public GenderModel(String gender) {
         this.gender = gender;
+    }
+
+    public GenderModel(Gender gender) {
+        this.gender = gender.getGender();
+    }
+
+    public GenderModel(GenderDTO genderDTO) {
+        this.gender = genderDTO.getGender();
     }
 }
