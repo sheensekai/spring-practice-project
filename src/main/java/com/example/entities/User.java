@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import com.example.model.UserModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "username", unique = true)
@@ -28,6 +29,12 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.passwordHash = passwordHash;
+    }
+
+    public User(UserModel user) {
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.passwordHash = user.getPasswordHash();
     }
 
 }
