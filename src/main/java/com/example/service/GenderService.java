@@ -15,4 +15,8 @@ public class GenderService {
         Gender newGender = new Gender(gender);
         return this.genderRepository.save(newGender).getId();
     }
+
+    public boolean exists(GenderModel gender) {
+        return this.genderRepository.existsByGender(gender.getGender());
+    }
 }
