@@ -5,30 +5,21 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
     public int addUser(UserModel user) {
-        long id = user.getId();
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        User newUser = new User(id, userName, email, passwordHash);
-        return this.userRepository.save(newUser).getUserId();
+        User newUser = new User(user);
+        return this.userRepository.save(newUser).getId();
     }
 
-    public UserModel getUserById(long id) {
+    public UserModel getUserById(int id) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
-
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        return new UserModel(id, userName, email, passwordHash);
+        return new UserModel(user);
     }
 }

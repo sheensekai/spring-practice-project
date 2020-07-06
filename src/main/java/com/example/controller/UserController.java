@@ -3,25 +3,23 @@ package com.example.controller;
 import com.example.dto.UserDTO;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
-import com.example.repository.UserRepository;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @PostMapping("/users")
-    public int  addUser(@RequestBody UserDTO user) {
-        long id = user.getId();
+    public int addUser(@RequestBody UserDTO user) {
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        UserModel newUser = new UserModel(id, userName, email, passwordHash);
+        UserModel newUser = new UserModel(userName, email, passwordHash);
         return this.userService.addUser(newUser);
     }
 
@@ -30,11 +28,10 @@ public class UserController {
         throws ResourceNotFoundException {
         UserModel user = this.userService.getUserById(userId);
 
-        long id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        return new UserDTO(id, userName, email, passwordHash);
+        return new UserDTO(userName, email, passwordHash);
     }
 }
