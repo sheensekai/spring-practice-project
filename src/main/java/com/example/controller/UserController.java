@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.UserDTO;
+import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.service.UserService;
@@ -14,8 +15,17 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/users")
-    public int addUser(@RequestBody UserDTO user) {
+    public int addUser(@RequestBody UserDTO user)
+        throws ResourceAlreadyExistsException {
         UserModel newUser = new UserModel(user);
+
+        if (this.userService.containsUserName(newUser.getUserName())) {
+            throw new ResourceAlreadyExistsException("User with username " + newUser.getUserName() + " already exists");
+        }
+        if (this.userService.containsEmail(newUser.getEmail())) {
+            throw new ResourceAlreadyExistsException("User with email " + newUser.getEmail() + " already exists");
+        }
+
         return this.userService.addUser(newUser);
     }
 
