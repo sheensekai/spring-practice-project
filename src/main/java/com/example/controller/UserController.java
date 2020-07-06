@@ -15,11 +15,7 @@ public class UserController {
 
     @PostMapping("/users")
     public int addUser(@RequestBody UserDTO user) {
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        UserModel newUser = new UserModel(userName, email, passwordHash);
+        UserModel newUser = new UserModel(user);
         return this.userService.addUser(newUser);
     }
 
@@ -27,11 +23,6 @@ public class UserController {
     public UserDTO getUserById(@PathVariable(value = "userId") Integer userId)
         throws ResourceNotFoundException {
         UserModel user = this.userService.getUserById(userId);
-
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        return new UserDTO(userName, email, passwordHash);
+        return new UserDTO(user);
     }
 }
