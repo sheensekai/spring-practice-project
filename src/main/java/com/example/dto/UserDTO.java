@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-    private long id;
+    private int id;
     private String userName;
     private String email;
     private long passwordHash;
 
-    public UserDTO(long id, String userName, String email, long passwordHash) {
+    public UserDTO(int id, String userName, String email, long passwordHash) {
         this.id = id;
         this.userName = userName;
         this.email = email;
