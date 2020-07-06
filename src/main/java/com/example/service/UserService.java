@@ -22,4 +22,12 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
         return new UserModel(user);
     }
+
+    public boolean containsUserName(String userName) {
+        return this.userRepository.existsByUserName(userName);
+    }
+
+    public boolean containsEmail(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
 }
