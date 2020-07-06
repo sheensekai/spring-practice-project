@@ -2,7 +2,6 @@ package com.example.model;
 
 import com.example.dto.GenderDTO;
 import com.example.entities.Gender;
-import com.example.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

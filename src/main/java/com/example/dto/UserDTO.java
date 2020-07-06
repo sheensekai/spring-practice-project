@@ -1,6 +1,5 @@
 package com.example.dto;
 
-import com.example.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
