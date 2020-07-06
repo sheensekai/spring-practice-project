@@ -24,8 +24,7 @@ public class User {
     @Column(name = "passwordhash")
     private long passwordHash;
 
-    public User(int id, String userName, String email, long passwordHash) {
-        this.id = id;
+    public User(String userName, String email, long passwordHash) {
         this.userName = userName;
         this.email = email;
         this.passwordHash = passwordHash;
