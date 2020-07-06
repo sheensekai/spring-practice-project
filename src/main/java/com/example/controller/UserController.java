@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.dto.UserDTO;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
-import com.example.repository.UserRepository;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ public class UserController {
 
     @PostMapping("/users")
     public int  addUser(@RequestBody UserDTO user) {
-        long id = user.getId();
+        int id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
@@ -30,7 +29,7 @@ public class UserController {
         throws ResourceNotFoundException {
         UserModel user = this.userService.getUserById(userId);
 
-        long id = user.getId();
+        int id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
