@@ -13,22 +13,13 @@ public class UserService {
     private UserRepository userRepository;
 
     public int addUser(UserModel user) {
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        User newUser = new User(userName, email, passwordHash);
+        User newUser = new User(user);
         return this.userRepository.save(newUser).getId();
     }
 
     public UserModel getUserById(int id) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
-
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
-
-        return new UserModel(userName, email, passwordHash);
+        return new UserModel(user);
     }
 }
