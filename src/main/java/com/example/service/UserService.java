@@ -21,7 +21,7 @@ public class UserService {
         return this.userRepository.save(newUser).getId();
     }
 
-    public UserModel getUserById(long id) {
+    public UserModel getUserById(int id) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
 
