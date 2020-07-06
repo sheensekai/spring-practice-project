@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.dto.UserDTO;
 import com.example.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,12 @@ public class UserModel {
     }
 
     public UserModel(User user) {
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.passwordHash = user.getPasswordHash();
+    }
+
+    public UserModel(UserDTO user) {
         this.userName = user.getUserName();
         this.email = user.getEmail();
         this.passwordHash = user.getPasswordHash();
