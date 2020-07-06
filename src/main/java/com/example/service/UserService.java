@@ -12,12 +12,11 @@ public class UserService {
     private UserRepository userRepository;
 
     public int addUser(UserModel user) {
-        int id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        User newUser = new User(id, userName, email, passwordHash);
+        User newUser = new User(userName, email, passwordHash);
         return this.userRepository.save(newUser).getId();
     }
 
@@ -29,6 +28,6 @@ public class UserService {
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
-        return new UserModel(id, userName, email, passwordHash);
+        return new UserModel(userName, email, passwordHash);
     }
 }
