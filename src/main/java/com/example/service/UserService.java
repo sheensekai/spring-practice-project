@@ -5,8 +5,9 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
