@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,5 +15,11 @@ public class UserModel {
         this.userName = userName;
         this.email = email;
         this.passwordHash = passwordHash;
+    }
+
+    public UserModel(User user) {
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.passwordHash = user.getPasswordHash();
     }
 }
