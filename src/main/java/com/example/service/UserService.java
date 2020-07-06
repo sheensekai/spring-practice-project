@@ -12,13 +12,13 @@ public class UserService {
     private UserRepository userRepository;
 
     public int addUser(UserModel user) {
-        long id = user.getId();
+        int id = user.getId();
         String userName = user.getUserName();
         String email = user.getEmail();
         long passwordHash = user.getPasswordHash();
 
         User newUser = new User(id, userName, email, passwordHash);
-        return this.userRepository.save(newUser).getUserId();
+        return this.userRepository.save(newUser).getId();
     }
 
     public UserModel getUserById(long id) {
