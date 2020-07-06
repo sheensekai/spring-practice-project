@@ -20,6 +20,8 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "passwordhash")
     private long passwordHash;
 
     public User(long id, String userName, String email, long passwordHash) {
