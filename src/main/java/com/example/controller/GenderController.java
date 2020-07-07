@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.GenderDTO;
+import com.example.exception.ResourceAlreadyExistsException;
 import com.example.model.GenderModel;
 import com.example.service.GenderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,8 @@ public class GenderController {
     private GenderService genderService;
 
     @PostMapping("/")
-    public int addGender(@RequestBody GenderDTO gender) {
+    public int addGender(@RequestBody GenderDTO gender)
+            throws ResourceAlreadyExistsException {
         GenderModel newGender = new GenderModel(gender);
         return this.genderService.addGender(newGender);
     }
