@@ -5,38 +5,33 @@ import com.example.dto.UserInfoDTO;
 import com.example.entities.UserInfo;
 import com.example.exception.GenderEnumDoesntExistException;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class UserInfoModel {
     private int userId;
-    private String firstName;
-    private String lastName;
+    @NonNull private String firstName;
+    @NonNull private String lastName;
     private GenderEnum genderEnum;
-    private long birthDate;
+    @NonNull private long birthDate;
 
-    public UserInfoModel(UserInfoDTO user) {
-        this.userId = user.getUserId();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+    public UserInfoModel(UserInfoDTO userInfoDTO) {
+        this(userInfoDTO.getFirstName(), userInfoDTO.getLastName(), userInfoDTO.getBirthDate());
 
-        this.genderEnum = GenderEnum.findEnum(user.getGender());
+        this.genderEnum = GenderEnum.findEnum(userInfoDTO.getGender());
         if (this.genderEnum == null) {
-            throw new GenderEnumDoesntExistException("Enum for " + user.getGender() + " doesn't exist");
+            throw new GenderEnumDoesntExistException("Enum for " + userInfoDTO.getGender() + " doesn't eixst");
         }
-
-        this.birthDate = user.getBirthDate();
     }
 
     public UserInfoModel(UserInfo userInfo, String gender) {
-        this.userId = userInfo.getUserId();
-        this.firstName = userInfo.getFirstName();
-        this.lastName = userInfo.getLastName();
+        this(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getBirthDate());
 
         this.genderEnum = GenderEnum.findEnum(gender);
         if (this.genderEnum == null) {
             throw new GenderEnumDoesntExistException("Enum for " + gender + " doesn't eixst");
         }
-
-        this.birthDate = userInfo.getBirthDate();
     }
 }
