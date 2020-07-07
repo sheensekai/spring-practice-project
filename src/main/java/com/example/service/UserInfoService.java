@@ -33,4 +33,12 @@ public class UserInfoService {
 
         this.userInfoRepository.save(newUserInfo);
     }
+
+    public UserInfoModel getUserInfoByUserId(int userId) {
+        UserInfo userInfo = this.userInfoRepository.findById(userId)
+                .orElseThrow( () -> new ResourceNotFoundException("UserInfo with userId " + userId + " doesn't exist"));
+
+        String gender = this.genderRepository.findById(userInfo.getGenderId()).get().getGender();
+        return new UserInfoModel(userInfo, gender);
+    }
 }
