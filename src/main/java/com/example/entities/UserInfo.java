@@ -1,6 +1,8 @@
 package com.example.entities;
 
+import com.example.model.UserInfoModel;
 import com.example.model.UserModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "userinfo")
 public class UserInfo {
@@ -35,6 +38,17 @@ public class UserInfo {
 
     public UserInfo(String firstName, String lastName, int genderId, long birthDate) {
         this(firstName, lastName, birthDate);
+        this.genderId = genderId;
+    }
+
+    public UserInfo(UserInfoModel userInfo) {
+        this.firstName = userInfo.getFirstName();
+        this.lastName = userInfo.getLastName();
+        this.birthDate = userInfo.getBirthDate();
+    }
+
+    public UserInfo(UserInfoModel userInfo, int genderId) {
+        this(userInfo);
         this.genderId = genderId;
     }
 
