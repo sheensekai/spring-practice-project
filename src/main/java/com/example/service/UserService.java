@@ -26,10 +26,24 @@ public class UserService {
         return new UserModel(newUser);
     }
 
-    public UserModel getUserById(int id) {
-        User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + id));
+    public UserModel updateUser(UserModel user) {
+        if (!this.userRepository.existsById(user.getUserId())) {
+            throw new ResourceNotFoundException("User with id " + user.getUserId() + " doesn't exist");
+        }
+
+        User newUser = new User(user);
+        newUser = this.userRepository.save(newUser);
+        return new UserModel(newUser);
+    }
+
+    public UserModel getUserByUserid(int userId) {
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + userId));
         return new UserModel(user);
+    }
+
+    public boolean existsByUserId(int userId) {
+        return this.userRepository.existsById(userId);
     }
 
     public boolean containsUserName(String userName) {
