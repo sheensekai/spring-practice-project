@@ -14,9 +14,10 @@ public class GenderController {
     private GenderService genderService;
 
     @PostMapping("/")
-    public void addGender(@RequestBody GenderDTO gender)
+    public GenderDTO addGender(@RequestBody GenderDTO gender)
             throws ResourceAlreadyExistsException {
-        GenderModel newGender = new GenderModel(gender);
-        this.genderService.addGender(newGender);
+        GenderModel newGendreModel = new GenderModel(gender);
+        newGendreModel = this.genderService.addGender(newGendreModel);
+        return new GenderDTO(newGendreModel);
     }
 }
