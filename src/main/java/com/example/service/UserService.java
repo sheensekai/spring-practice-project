@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entities.User;
+import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
@@ -13,6 +14,13 @@ public class UserService {
     private UserRepository userRepository;
 
     public int addUser(UserModel user) {
+        if (this.containsUserName(user.getUserName())) {
+            throw new ResourceAlreadyExistsException("User with username " + user.getUserName() + " already exists");
+        }
+        if (this.containsEmail(user.getEmail())) {
+            throw new ResourceAlreadyExistsException("User with email " + user.getEmail() + " already exists");
+        }
+
         User newUser = new User(user);
         return this.userRepository.save(newUser).getId();
     }
