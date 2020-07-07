@@ -38,4 +38,9 @@ public class User {
         this(user.getUserName(), user.getEmail(), user.getPasswordHash());
     }
 
+    public void updateStatus(UserStatus newUserStatus) {
+        this.statusId = newUserStatus.statusId;
+        this.updatetime = newUserStatus.updateTime;
+    }
+
 }
