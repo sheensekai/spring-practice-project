@@ -1,15 +1,13 @@
 package com.example.entities;
 
 import com.example.model.UserModel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,19 +16,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
+    @NonNull
     @Column(name = "username", unique = true)
     private String userName;
 
+    @NonNull
     @Column(name = "email", unique = true)
     private String email;
 
+    @NonNull
     @Column(name = "passwordhash")
     private long passwordHash;
 
     public User(UserModel user) {
-        this.userName = user.getUserName();
-        this.email = user.getEmail();
-        this.passwordHash = user.getPasswordHash();
+        this(user.getUserName(), user.getEmail(), user.getPasswordHash());
     }
 
 }
