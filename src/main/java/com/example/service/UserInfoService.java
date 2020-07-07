@@ -5,8 +5,8 @@ import com.example.entities.Gender;
 import com.example.entities.UserInfo;
 import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
+import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
-import com.example.repository.GenderRepository;
 import com.example.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class UserInfoService {
     @Autowired
     private UserInfoRepository userInfoRepository;
     @Autowired
-    private GenderRepository genderRepository;
+    private GenderService genderService;
 
     public void addUserInfo(UserInfoModel userInfoModel) {
         if (this.userInfoRepository.existsById(userInfoModel.getUserId())) {
@@ -25,10 +25,10 @@ public class UserInfoService {
 
         GenderEnum newUserGenderEnum = userInfoModel.getGenderEnum();
         String genderString = newUserGenderEnum.toString().toLowerCase();
-        Gender newUserGender = this.genderRepository.findByGender(genderString)
-                .orElseThrow( () -> new ResourceNotFoundException("Gender " + newUserGenderEnum.toString().toLowerCase() + " doesn't exist"));
+        GenderModel newUserGenderModel = this.genderService.findGenderByGender(genderString);
+        Gender newUserGender = new Gender(newUserGenderModel);
 
-        int genderId = newUserGender.getId();
+        int genderId = newUserGender.getGenderId();
         UserInfo newUserInfo = new UserInfo(userInfoModel, genderId);
 
         this.userInfoRepository.save(newUserInfo);
@@ -38,7 +38,8 @@ public class UserInfoService {
         UserInfo userInfo = this.userInfoRepository.findById(userId)
                 .orElseThrow( () -> new ResourceNotFoundException("UserInfo with userId " + userId + " doesn't exist"));
 
-        String genderString = this.genderRepository.findById(userInfo.getGenderId()).get().getGender();
+        GenderModel foundGenderModel = this.genderService.findGenderById(userId);
+        String genderString = foundGenderModel.getGender().toString().toLowerCase();
         return new UserInfoModel(userInfo, genderString);
     }
 
@@ -48,10 +49,9 @@ public class UserInfoService {
         }
 
         String genderString = userInfoModel.getGenderEnum().toString().toLowerCase();
-        Gender gender = this.genderRepository.findByGender(genderString)
-                .orElseThrow( () -> new ResourceNotFoundException("Gender " + genderString + " doesn't exist"));
+        GenderModel genderModel = this.genderService.findGenderByGender(genderString);
 
-        UserInfo newUserInfo = new UserInfo(userInfoModel, gender.getId());
+        UserInfo newUserInfo = new UserInfo(userInfoModel, genderModel.getGenderId());
         this.userInfoRepository.save(newUserInfo);
     }
 }
