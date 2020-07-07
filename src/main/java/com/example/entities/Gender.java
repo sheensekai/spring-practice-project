@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "genders")
+@Table(name = "Genders")
 public class Gender {
 
     @Id
@@ -20,7 +20,7 @@ public class Gender {
     private int genderId;
 
     @NonNull
-    @Column(name = "gender", unique = true)
+    @Column(name = "Gender", unique = true)
     private String gender;
 
     public Gender(GenderModel genderModel) {

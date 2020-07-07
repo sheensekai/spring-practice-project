@@ -1,31 +1,30 @@
 package com.example.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_statistics")
+@Table(name = "UserStatistics")
 public class UserStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long userStatusUpdateId;
 
     @NonNull
-    @Column(name = "updateTime")
+    @Column(name = "UpdateTime")
     long updateTime;
 
     @NonNull
-    @Column(name = "userid")
+    @Column(name = "UserId")
     int userId;
 
     @NonNull
-    @Column(name = "statusid")
+    @Column(name = "StatusId")
     int statusId;
 }

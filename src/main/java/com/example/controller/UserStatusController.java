@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import com.example.UserStatusEnum;
 import com.example.dto.UserStatusDTO;
+import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/userstatus")
+@RequestMapping("/api/userStatus")
 public class UserStatusController {
     @Autowired
     UserStatusService userStatusService;
@@ -21,10 +23,12 @@ public class UserStatusController {
     public List<UserStatusDTO> getStatistics
             (@RequestParam(name = "userId", defaultValue = "null") Integer userId,
              @RequestParam(name = "onlineStatus", defaultValue = "null") String onlineStatus,
-             @RequestParam(name = "updateTime", defaultValue = "0") Long updateTime) {
+             @RequestParam(name = "updateTime", defaultValue = "0") Long updateTime)
+        throws ResourceNotFoundException {
 
+        UserStatusEnum onlineStatusEnum = UserStatusEnum.findEnum(onlineStatus);
         List<UserStatusModel> userStatusModelList =
-                this.userStatusService.getStatistics(userId, onlineStatus, updateTime);
+                this.userStatusService.getStatistics(userId, onlineStatusEnum, updateTime);
         List<UserStatusDTO> answer = new ArrayList<>();
         for (UserStatusModel userStatusModel : userStatusModelList) {
             answer.add(new UserStatusDTO(userStatusModel));

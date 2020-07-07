@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_status_name")
+@Table(name = "UserStatusName")
 public class UserStatusName {
 
     @Id

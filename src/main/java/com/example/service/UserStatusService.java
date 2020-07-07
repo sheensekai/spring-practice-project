@@ -1,8 +1,10 @@
 package com.example.service;
 
 import com.example.UserStatusEnum;
+import com.example.entities.User;
 import com.example.entities.UserStatus;
 import com.example.exception.ResourceNotFoundException;
+import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusRepository;
@@ -17,10 +19,42 @@ import java.util.List;
 public class UserStatusService {
     @Autowired
     private UserStatusRepository userStatusRepository;
+
     @Autowired
     private UserStatusNameService userStatusNameService;
 
-    public List<UserStatusModel> getStatistics(Integer userId, String onlineStatus, Long updateTime) {
+    @Autowired
+    private UserService userService;
+
+    public UserStatusModel updateUserStatus(int userId, UserStatusEnum onlineStatus) {
+        if (!this.userService.existsByUserId(userId)) {
+            throw new ResourceNotFoundException("User with id " + userId + " doesn't exist");
+        }
+
+        UserStatus userStatus = this.updateUserStatusStatisticsImpl(userId, onlineStatus);
+        this.updateUserStatusImpl(userId, userStatus);
+
+        return new UserStatusModel(userStatus, onlineStatus);
+    }
+
+    private void updateUserStatusImpl(int userId, UserStatus newStatus) {
+        UserModel userModel = this.userService.getUserByUserid(userId);
+        User user = new User(userModel);
+        user.updateStatus(newStatus);
+        this.userService.updateUser(new UserModel(user));
+    }
+
+    private UserStatus updateUserStatusStatisticsImpl(int userId, UserStatusEnum onlineStatus) {
+        UserStatusNameModel userStatusName = this.userStatusNameService
+                .getStatusByStatusName(onlineStatus.toString().toLowerCase());
+
+        int statusId = userStatusName.getStatusId();
+        long updateTime = System.currentTimeMillis();
+        UserStatus userStatus = new UserStatus(updateTime, userId, statusId);
+        return this.userStatusRepository.save(userStatus);
+    }
+
+    public List<UserStatusModel> getStatistics(Integer userId, UserStatusEnum onlineStatus, Long updateTime) {
         Integer statusId = this.makeStatusIdValue(onlineStatus);
         updateTime = this.makeUpdateTimeValue(updateTime);
 
@@ -28,12 +62,12 @@ public class UserStatusService {
         return this.getStatisticsMakingAnswerImpl(userStatusList);
     }
 
-    private Integer makeStatusIdValue(String onlineStatus) {
+    private Integer makeStatusIdValue(UserStatusEnum onlineStatus) {
         if (onlineStatus == null) {
             return null;
         } else {
             UserStatusNameModel userStatusNameModel = this.userStatusNameService
-                    .getStatusByStatusName(onlineStatus.toLowerCase());
+                    .getStatusByStatusName(onlineStatus.toString().toLowerCase());
             return userStatusNameModel.getStatusId();
         }
     }

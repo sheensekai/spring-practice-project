@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.entities.UserStatus;
 import com.example.entities.UserStatusName;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserStatusNameModel;
