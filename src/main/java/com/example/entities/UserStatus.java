@@ -11,21 +11,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_statistics")
+@Table(name = "UserStatistics")
 public class UserStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long userStatusUpdateId;
 
     @NonNull
-    @Column(name = "updateTime")
+    @Column(name = "UpdateTime")
     long updateTime;
 
     @NonNull
-    @Column(name = "userid")
+    @Column(name = "UserId")
     int userId;
 
     @NonNull
-    @Column(name = "statusid")
+    @Column(name = "StatusId")
     int statusId;
 }

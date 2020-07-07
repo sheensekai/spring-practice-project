@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "SystemUsers")
 public class User {
 
     @Id
@@ -17,16 +17,22 @@ public class User {
     private int userId;
 
     @NonNull
-    @Column(name = "username", unique = true)
+    @Column(name = "Username", unique = true)
     private String userName;
 
     @NonNull
-    @Column(name = "email", unique = true)
+    @Column(name = "Email", unique = true)
     private String email;
 
     @NonNull
-    @Column(name = "passwordhash")
+    @Column(name = "PasswordHash")
     private long passwordHash;
+
+    @Column(name = "OnlineStatusId")
+    private int statusId;
+
+    @Column(name = "OnlineStatusUpdateTime")
+    private long updatetime;
 
     public User(UserModel user) {
         this(user.getUserName(), user.getEmail(), user.getPasswordHash());

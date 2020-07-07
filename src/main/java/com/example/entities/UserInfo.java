@@ -9,26 +9,26 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "user_info")
+@Table(name = "UserInfo")
 public class UserInfo {
 
     @Id
     private int userId;
 
     @NonNull
-    @Column(name = "firstname")
+    @Column(name = "FirstName")
     private String firstName;
 
     @NonNull
-    @Column(name = "lastname")
+    @Column(name = "LastName")
     private String lastName;
 
     @NonNull
-    @Column(name = "genderid")
+    @Column(name = "GenderId")
     private int genderId;
 
     @NonNull
-    @Column(name = "birthdate")
+    @Column(name = "BirthDate")
     private long birthDate;
 
     public UserInfo(UserInfoModel userInfo, int genderId) {
