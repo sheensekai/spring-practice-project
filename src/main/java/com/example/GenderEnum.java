@@ -1,9 +1,9 @@
 package com.example;
 
 public enum GenderEnum {
-    UNKNOWN,
     MALE,
-    FEMALE;
+    FEMALE,
+    UNKNOWN;
 
     public static GenderEnum findEnum(String name) {
         String toCheck = name.toLowerCase();

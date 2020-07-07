@@ -1,7 +1,6 @@
 package com.example.entities;
 
 import lombok.*;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
 
