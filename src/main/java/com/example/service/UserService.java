@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public int addUser(UserModel user) {
+    public UserModel addUser(UserModel user) {
         if (this.containsUserName(user.getUserName())) {
             throw new ResourceAlreadyExistsException("User with username " + user.getUserName() + " already exists");
         }
@@ -22,7 +22,8 @@ public class UserService {
         }
 
         User newUser = new User(user);
-        return this.userRepository.save(newUser).getId();
+        newUser = this.userRepository.save(newUser);
+        return new UserModel(newUser);
     }
 
     public UserModel getUserById(int id) {
