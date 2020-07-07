@@ -1,25 +1,41 @@
 package com.example.model;
 
+import com.example.dto.UserDTO;
 import com.example.entities.User;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UserModel {
+    private int userId;
+
+    @NonNull
     private String userName;
+
+    @NonNull
     private String email;
+
+    @NonNull
     private long passwordHash;
 
-    public UserModel(String userName, String email, long passwordHash) {
-        this.userName = userName;
-        this.email = email;
-        this.passwordHash = passwordHash;
+    private int statusId;
+    private long updatetime;
+
+    private void userModelInit(int userId, int statusId, long updatetime) {
+        this.userId = userId;
+        this.statusId = statusId;
+        this.updatetime = updatetime;
     }
 
     public UserModel(User user) {
-        this.userName = user.getUserName();
-        this.email = user.getEmail();
-        this.passwordHash = user.getPasswordHash();
+        this(user.getUserName(), user.getEmail(), user.getPasswordHash());
+        this.userModelInit(user.getUserId(), user.getStatusId(), user.getUpdatetime());
+    }
+
+    public UserModel(UserDTO userDTO) {
+        this(userDTO.getUserName(), userDTO.getEmail(), userDTO.getPasswordHash());
+        this.userModelInit(userDTO.getUserId(), userDTO.getUserId(), userDTO.getPasswordHash());
     }
 }

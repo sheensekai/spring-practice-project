@@ -1,37 +1,54 @@
 package com.example.controller;
 
+import com.example.UserStatusEnum;
 import com.example.dto.UserDTO;
+import com.example.dto.UserStatusDTO;
+import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
+import com.example.model.UserStatusModel;
 import com.example.service.UserService;
+import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/users")
-    public int addUser(@RequestBody UserDTO user) {
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
+    @Autowired
+    private UserStatusService userStatusService;
 
-        UserModel newUser = new UserModel(userName, email, passwordHash);
-        return this.userService.addUser(newUser);
+    @PostMapping("/")
+    public UserDTO addUser(@RequestBody UserDTO user)
+        throws ResourceAlreadyExistsException {
+        UserModel newUser = new UserModel(user);
+        newUser = this.userService.addUser(newUser);
+
+        this.userStatusService.updateUserStatus(user.getUserId(), UserStatusEnum.ONLINE);
+        return new UserDTO(newUser);
     }
 
-    @GetMapping("/users/{userId}")
-    public UserDTO getUserById(@PathVariable(value = "userId") Integer userId)
+    @PutMapping("/updateStatus")
+    public UserStatusDTO updateUserOnlineStatus(
+            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "newStatus") String newStatus)
         throws ResourceNotFoundException {
-        UserModel user = this.userService.getUserById(userId);
+        UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(newStatus);
+        if (userStatusEnum == null) {
+            throw new ResourceNotFoundException("Enum for " + newStatus + " doesn't exist");
+        }
 
-        String userName = user.getUserName();
-        String email = user.getEmail();
-        long passwordHash = user.getPasswordHash();
+        UserStatusModel userStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
+        return new UserStatusDTO(userStatusModel);
+    }
 
-        return new UserDTO(userName, email, passwordHash);
+    @GetMapping("/addUser")
+    public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
+        throws ResourceNotFoundException {
+        UserModel user = this.userService.getUserByUserid(userId);
+        return new UserDTO(user);
     }
 }
