@@ -12,14 +12,16 @@ public class UserModel {
     private long passwordHash;
 
     public UserModel(User user) {
+        this.userId = user.getUserId();
         this.userName = user.getUserName();
         this.email = user.getEmail();
         this.passwordHash = user.getPasswordHash();
     }
 
-    public UserModel(UserDTO user) {
-        this.userName = user.getUserName();
-        this.email = user.getEmail();
-        this.passwordHash = user.getPasswordHash();
+    public UserModel(UserDTO userDTO) {
+        this.userId = userDTO.getUserId();
+        this.userName = userDTO.getUserName();
+        this.email = userDTO.getEmail();
+        this.passwordHash = userDTO.getPasswordHash();
     }
 }
