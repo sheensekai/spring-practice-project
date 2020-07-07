@@ -2,10 +2,8 @@ package com.example.dto;
 
 import com.example.model.GenderModel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class GenderDTO {
     private String gender;
 
@@ -14,6 +12,6 @@ public class GenderDTO {
     }
 
     public GenderDTO(GenderModel genderModel) {
-        this.gender = genderModel.getGender();
+        this.gender = genderModel.getGender().toString().toLowerCase();
     }
 }

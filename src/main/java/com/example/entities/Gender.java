@@ -21,10 +21,6 @@ public class Gender {
     @Column(name = "gender", unique = true)
     private String gender;
 
-    public Gender(String gender) {
-        this.gender = gender;
-    }
-
     public Gender(GenderModel genderModel) {
         this.gender = genderModel.getGender().toString().toLowerCase();
     }
