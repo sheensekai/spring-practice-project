@@ -12,9 +12,10 @@ public class UserDTO {
     private String email;
     private long passwordHash;
 
-    public UserDTO(UserModel user) {
-        this.userName = user.getUserName();
-        this.email = user.getEmail();
-        this.passwordHash = user.getPasswordHash();
+    public UserDTO(UserModel userModel) {
+        this.userId = userModel.getUserId();
+        this.userName = userModel.getUserName();
+        this.email = userModel.getEmail();
+        this.passwordHash = userModel.getPasswordHash();
     }
 }
