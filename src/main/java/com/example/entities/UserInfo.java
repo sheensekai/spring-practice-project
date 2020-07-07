@@ -1,7 +1,6 @@
 package com.example.entities;
 
 import com.example.model.UserInfoModel;
-import com.example.model.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,11 +33,6 @@ public class UserInfo {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-    }
-
-    public UserInfo(String firstName, String lastName, int genderId, long birthDate) {
-        this(firstName, lastName, birthDate);
-        this.genderId = genderId;
     }
 
     public UserInfo(UserInfoModel userInfo) {
