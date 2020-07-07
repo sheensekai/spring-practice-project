@@ -29,20 +29,10 @@ public class UserInfo {
     @Column(name = "birthdate")
     private long birthDate;
 
-    public UserInfo(String firstName, String lastName, long birthDate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-    }
-
-    public UserInfo(UserInfoModel userInfo) {
+    public UserInfo(UserInfoModel userInfo, int genderId) {
         this.firstName = userInfo.getFirstName();
         this.lastName = userInfo.getLastName();
         this.birthDate = userInfo.getBirthDate();
-    }
-
-    public UserInfo(UserInfoModel userInfo, int genderId) {
-        this(userInfo);
         this.genderId = genderId;
     }
 
