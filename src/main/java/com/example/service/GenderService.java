@@ -17,6 +17,6 @@ public class GenderService {
     }
 
     public boolean exists(GenderModel gender) {
-        return this.genderRepository.existsByGender(gender.getGender());
+        return this.genderRepository.existsByGender(gender.getGender().toString().toLowerCase());
     }
 }

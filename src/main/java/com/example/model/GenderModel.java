@@ -1,24 +1,23 @@
 package com.example.model;
 
+import com.example.GenderEnum;
 import com.example.dto.GenderDTO;
 import com.example.entities.Gender;
+import com.example.exception.GenderEnumDoesntExistException;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class GenderModel {
-    private String gender;
+    private GenderEnum gender;
 
     public GenderModel(String gender) {
-        this.gender = gender;
-    }
-
-    public GenderModel(Gender gender) {
-        this.gender = gender.getGender();
+        this.gender = GenderEnum.findEnum(gender);
+        if (this.gender == null) {
+            throw new GenderEnumDoesntExistException("Enum for " + gender + " doesn't exist");
+        }
     }
 
     public GenderModel(GenderDTO genderDTO) {
-        this.gender = genderDTO.getGender();
+        this(genderDTO.getGender());
     }
 }
