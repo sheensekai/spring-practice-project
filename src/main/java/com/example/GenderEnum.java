@@ -7,9 +7,9 @@ public enum GenderEnum {
 
     public static GenderEnum findEnum(String name) {
         String toCheck = name.toLowerCase();
-        for (GenderEnum gender : GenderEnum.values())  {
-            if (toCheck.equals(gender.toString().toLowerCase())) {
-                return gender;
+        for (GenderEnum genderEnum : GenderEnum.values())  {
+            if (toCheck.equals(genderEnum.toString().toLowerCase())) {
+                return genderEnum;
             }
         }
 
