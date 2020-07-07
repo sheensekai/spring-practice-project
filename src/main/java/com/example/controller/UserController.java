@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping("/")
     public int addUser(@RequestBody UserDTO user)
         throws ResourceAlreadyExistsException {
         UserModel newUser = new UserModel(user);
@@ -29,7 +29,7 @@ public class UserController {
         return this.userService.addUser(newUser);
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public UserDTO getUserById(@PathVariable(value = "userId") Integer userId)
         throws ResourceNotFoundException {
         UserModel user = this.userService.getUserById(userId);
