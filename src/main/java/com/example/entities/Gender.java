@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import com.example.model.GenderModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "genders")
 public class Gender {
@@ -24,6 +26,6 @@ public class Gender {
     }
 
     public Gender(GenderModel genderModel) {
-        this.gender = genderModel.getGender();
+        this.gender = genderModel.getGender().toString().toLowerCase();
     }
 }
