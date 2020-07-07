@@ -4,7 +4,6 @@ import com.example.dto.UserInfoDTO;
 import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserInfoModel;
-import com.example.service.GenderService;
 import com.example.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,5 +26,12 @@ public class UserInfoController {
         throws ResourceNotFoundException {
         UserInfoModel userInfoModel = new UserInfoModel(userInfoDTO);
         this.userInfoService.updateUserInfo(userInfoModel);
+    }
+
+    @GetMapping("/{userId}")
+    public UserInfoDTO getUserInfo(@PathVariable(name = "userId") Integer userId)
+        throws ResourceNotFoundException {
+        UserInfoModel foundUserInfoModel =  this.userInfoService.getUserInfoByUserId(userId);
+        return new UserInfoDTO(foundUserInfoModel);
     }
 }
