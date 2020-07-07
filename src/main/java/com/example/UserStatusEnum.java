@@ -2,7 +2,8 @@ package com.example;
 
 public enum UserStatusEnum {
     ONLINE,
-    OFFLINE;
+    OFFLINE,
+    UNKNOWN;
 
     public static UserStatusEnum findEnum(String name) {
         String toCheck = name.toLowerCase();
