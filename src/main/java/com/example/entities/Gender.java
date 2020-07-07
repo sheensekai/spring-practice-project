@@ -1,15 +1,16 @@
 package com.example.entities;
 
 import com.example.model.GenderModel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "genders")
 public class Gender {
@@ -18,10 +19,11 @@ public class Gender {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int genderId;
 
+    @NonNull
     @Column(name = "gender", unique = true)
     private String gender;
 
     public Gender(GenderModel genderModel) {
-        this.gender = genderModel.getGender().toString().toLowerCase();
+        this(genderModel.getGender().toString().toLowerCase());
     }
 }
