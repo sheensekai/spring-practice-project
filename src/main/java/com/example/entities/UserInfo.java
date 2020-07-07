@@ -1,15 +1,13 @@
 package com.example.entities;
 
 import com.example.model.UserInfoModel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "userinfo")
 public class UserInfo {
@@ -17,23 +15,24 @@ public class UserInfo {
     @Id
     private int userId;
 
+    @NonNull
     @Column(name = "firstname")
     private String firstName;
 
+    @NonNull
     @Column(name = "lastname")
     private String lastName;
 
+    @NonNull
     @Column(name = "genderid")
     private int genderId;
 
+    @NonNull
     @Column(name = "birthdate")
     private long birthDate;
 
     public UserInfo(UserInfoModel userInfo, int genderId) {
-        this.firstName = userInfo.getFirstName();
-        this.lastName = userInfo.getLastName();
-        this.birthDate = userInfo.getBirthDate();
-        this.genderId = genderId;
+        this(userInfo.getFirstName(), userInfo.getLastName(), genderId, userInfo.getBirthDate());
     }
 
 }
