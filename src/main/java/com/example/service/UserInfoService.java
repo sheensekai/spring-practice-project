@@ -40,7 +40,7 @@ public class UserInfoService {
         return new UserInfoModel(userInfo, genderString);
     }
 
-    public void updateUserInfo(UserInfoModel userInfoModel) {
+    public UserInfoModel updateUserInfo(UserInfoModel userInfoModel) {
         if (!this.userInfoRepository.existsById(userInfoModel.getUserId())) {
             throw new ResourceNotFoundException("UserInfo with userId " + userInfoModel.getUserId() + " doesn't exist");
         }
@@ -49,6 +49,7 @@ public class UserInfoService {
         GenderModel genderModel = this.genderService.findGenderByGender(genderString);
 
         UserInfo newUserInfo = new UserInfo(userInfoModel, genderModel.getGenderId());
-        this.userInfoRepository.save(newUserInfo);
+        newUserInfo = this.userInfoRepository.save(newUserInfo);
+        return new UserInfoModel(newUserInfo, genderString);
     }
 }
