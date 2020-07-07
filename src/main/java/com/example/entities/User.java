@@ -27,12 +27,6 @@ public class User {
     @Column(name = "passwordhash")
     private long passwordHash;
 
-    public User(String userName, String email, long passwordHash) {
-        this.userName = userName;
-        this.email = email;
-        this.passwordHash = passwordHash;
-    }
-
     public User(UserModel user) {
         this.userName = user.getUserName();
         this.email = user.getEmail();

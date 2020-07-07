@@ -2,7 +2,6 @@ package com.example.model;
 
 import com.example.GenderEnum;
 import com.example.dto.GenderDTO;
-import com.example.entities.Gender;
 import com.example.exception.GenderEnumDoesntExistException;
 import lombok.Data;
 
