@@ -16,7 +16,7 @@ public class Gender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int genderId;
 
     @Column(name = "gender", unique = true)
     private String gender;
