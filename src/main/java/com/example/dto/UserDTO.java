@@ -19,6 +19,9 @@ public class UserDTO {
     @NonNull
     private long passwordHash;
 
+    private int statusId;
+    private long updatetime;
+
     public UserDTO(UserModel userModel) {
         this(userModel.getUserName(), userModel.getEmail(), userModel.getPasswordHash());
         this.userId = userModel.getUserId();

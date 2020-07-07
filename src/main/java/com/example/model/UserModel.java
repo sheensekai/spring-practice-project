@@ -20,13 +20,22 @@ public class UserModel {
     @NonNull
     private long passwordHash;
 
+    private int statusId;
+    private long updatetime;
+
+    private void userModelInit(int userId, int statusId, long updatetime) {
+        this.userId = userId;
+        this.statusId = statusId;
+        this.updatetime = updatetime;
+    }
+
     public UserModel(User user) {
         this(user.getUserName(), user.getEmail(), user.getPasswordHash());
-        this.userId = user.getUserId();
+        this.userModelInit(user.getUserId(), user.getStatusId(), user.getUpdatetime());
     }
 
     public UserModel(UserDTO userDTO) {
         this(userDTO.getUserName(), userDTO.getEmail(), userDTO.getPasswordHash());
-        this.userId = userDTO.getUserId();
+        this.userModelInit(userDTO.getUserId(), userDTO.getUserId(), userDTO.getPasswordHash());
     }
 }
