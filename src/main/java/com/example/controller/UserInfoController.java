@@ -1,12 +1,7 @@
 package com.example.controller;
 
-import com.example.GenderEnum;
 import com.example.dto.UserInfoDTO;
-import com.example.entities.Gender;
-import com.example.entities.UserInfo;
 import com.example.exception.ResourceAlreadyExistsException;
-import com.example.exception.ResourceNotFoundException;
-import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.service.GenderService;
 import com.example.service.UserInfoService;
