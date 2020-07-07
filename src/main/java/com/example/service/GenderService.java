@@ -12,13 +12,13 @@ public class GenderService {
     @Autowired
     private GenderRepository genderRepository;
 
-    public int addGender(GenderModel gender) {
+    public void addGender(GenderModel gender) {
         if (this.existsGender(gender)) {
             throw new ResourceAlreadyExistsException("Gender " + gender.getGender().toString() + " already exists");
         }
 
         Gender newGender = new Gender(gender);
-        return this.genderRepository.save(newGender).getId();
+        this.genderRepository.save(newGender);
     }
 
     public boolean existsGender(GenderModel gender) {
