@@ -18,20 +18,17 @@ public class UserInfoService {
     @Autowired
     private GenderService genderService;
 
-    public void addUserInfo(UserInfoModel userInfoModel) {
+    public UserInfoModel addUserInfo(UserInfoModel userInfoModel) {
         if (this.userInfoRepository.existsById(userInfoModel.getUserId())) {
             throw new ResourceAlreadyExistsException("UserInfo with userId " + userInfoModel.getUserId() + " already exists");
         }
 
-        GenderEnum newUserGenderEnum = userInfoModel.getGenderEnum();
-        String genderString = newUserGenderEnum.toString().toLowerCase();
+        String genderString = userInfoModel.getGenderEnum().toString().toLowerCase();
         GenderModel newUserGenderModel = this.genderService.findGenderByGender(genderString);
-        Gender newUserGender = new Gender(newUserGenderModel);
+        UserInfo newUserInfo = new UserInfo(userInfoModel, newUserGenderModel.getGenderId());
 
-        int genderId = newUserGender.getGenderId();
-        UserInfo newUserInfo = new UserInfo(userInfoModel, genderId);
-
-        this.userInfoRepository.save(newUserInfo);
+        newUserInfo = this.userInfoRepository.save(newUserInfo);
+        return new UserInfoModel(newUserInfo, genderString);
     }
 
     public UserInfoModel getUserInfoByUserId(int userId) {
