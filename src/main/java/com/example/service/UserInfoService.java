@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.GenderEnum;
 import com.example.entities.Gender;
 import com.example.entities.UserInfo;
+import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserInfoModel;
 import com.example.repository.GenderRepository;
@@ -18,12 +19,18 @@ public class UserInfoService {
     private GenderRepository genderRepository;
 
     public void addUserInfo(UserInfoModel userInfo) {
+        if (this.userInfoRepository.existsById(userInfo.getUserId())) {
+            throw new ResourceAlreadyExistsException("UserInfo with userId " + userInfo.getUserId() + " already exists");
+        }
+
         GenderEnum newUserGenderEnum = userInfo.getGenderEnum();
-        Gender newUserGender = this.genderRepository.findByGender(newUserGenderEnum.toString())
-                .orElseThrow( () -> new ResourceNotFoundException("Gender " + newUserGenderEnum.toString().toLowerCase() + " doesn't exist in database"));
+        String genderString = newUserGenderEnum.toString().toLowerCase();
+        Gender newUserGender = this.genderRepository.findByGender(genderString)
+                .orElseThrow( () -> new ResourceNotFoundException("Gender " + newUserGenderEnum.toString().toLowerCase() + " doesn't exist"));
 
         int genderId = newUserGender.getId();
         UserInfo newUserInfo = new UserInfo(userInfo, genderId);
+
         this.userInfoRepository.save(newUserInfo);
     }
 }
