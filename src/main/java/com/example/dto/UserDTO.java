@@ -22,8 +22,14 @@ public class UserDTO {
     private int statusId;
     private long updatetime;
 
+    private void userDTOInit(int userId, int statusId, long updatetime) {
+        this.userId = userId;
+        this.statusId = statusId;
+        this.updatetime = updatetime;
+    }
+
     public UserDTO(UserModel userModel) {
         this(userModel.getUserName(), userModel.getEmail(), userModel.getPasswordHash());
-        this.userId = userModel.getUserId();
+        this.userDTOInit(userModel.getUserId(), userModel.getStatusId(), userModel.getUpdatetime());
     }
 }
