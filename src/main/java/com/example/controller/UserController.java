@@ -15,10 +15,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    public int addUser(@RequestBody UserDTO user)
+    public UserDTO addUser(@RequestBody UserDTO user)
         throws ResourceAlreadyExistsException {
         UserModel newUser = new UserModel(user);
-        return this.userService.addUser(newUser);
+        newUser = this.userService.addUser(newUser);
+        return new UserDTO(newUser);
     }
 
     @GetMapping("/{userId}")
