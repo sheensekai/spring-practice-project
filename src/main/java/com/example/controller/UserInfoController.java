@@ -4,7 +4,7 @@ import com.example.dto.UserInfoDTO;
 import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserInfoModel;
-import com.example.service.UserInfoService;
+import com.example.service.impl.UserInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/userInfo")
 public class UserInfoController {
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoServiceImpl userInfoService;
 
     @PostMapping("/{userId}")
     public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)

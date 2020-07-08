@@ -4,7 +4,7 @@ import com.example.UserStatusEnum;
 import com.example.dto.UserStatusDTO;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
-import com.example.service.UserStatusService;
+import com.example.service.impl.UserStatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/userStatus")
 public class UserStatusController {
     @Autowired
-    UserStatusService userStatusService;
+    UserStatusServiceImpl userStatusService;
 
     @RequestMapping("/statistics")
     public List<UserStatusDTO> getStatistics

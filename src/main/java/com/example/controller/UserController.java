@@ -7,8 +7,8 @@ import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
-import com.example.service.UserService;
-import com.example.service.UserStatusService;
+import com.example.service.impl.UserServiceImpl;
+import com.example.service.impl.UserStatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private UserStatusService userStatusService;
+    private UserStatusServiceImpl userStatusService;
 
     @PostMapping("/")
     public UserDTO addUser(@RequestBody UserDTO user)
@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping("/addUser")
     public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
         throws ResourceNotFoundException {
-        UserModel user = this.userService.getUserByUserid(userId);
+        UserModel user = this.userService.getUserByUserId(userId);
         return new UserDTO(user);
     }
 }
