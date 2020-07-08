@@ -3,13 +3,13 @@ package com.example.tests.services;
 import com.example.UserStatusEnum;
 import com.example.entities.UserStatus;
 import com.example.entities.UserStatusName;
+import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusRepository;
 import com.example.service.impl.UserServiceImpl;
 import com.example.service.impl.UserStatusNameServiceImpl;
 import com.example.service.impl.UserStatusServiceImpl;
-import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserStatusServiceImplTests extends BaseTestClass {
     @BeforeEach
@@ -198,6 +199,41 @@ public class UserStatusServiceImplTests extends BaseTestClass {
                         UserStatusEnum.findEnum(userStatusNameModel.getStatusName()),
                         userStatus.getUpdateTime()),
                 Arrays.asList(userStatusModel));
+    }
+
+    @Test
+    public void whenUserIsNotContainedUpdateUserStatusThrowsException() {
+        UserStatusModel userStatusModel = userStatusModelList.get(0);
+        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(false);
+        userStatusService = new UserStatusServiceImpl
+                (userStatusRepository, userStatusNameService, userService);
+
+        assertThrows(ResourceNotFoundException.class, ()
+                -> userStatusService.updateUserStatus(
+                userStatusModel.getUserId(),
+                userStatusModel.getOnlineStatus()));
+    }
+
+    @Test
+    public void whenUserIsContainedUpdateUserStatusReturnsUpdatedUserStatus() {
+        UserStatusModel userStatusModel = userStatusModelList.get(0);
+        UserStatus userStatus = userStatusList.get(0);
+        UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(0);
+        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(userService.getUserByUserId(Mockito.anyInt()))
+                .thenReturn(userModelList.get(0));
+        Mockito.when(userStatusRepository.save(Mockito.any()))
+                .thenReturn(userStatus);
+        Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
+                .thenReturn(userStatusNameModel);
+        userStatusService = new UserStatusServiceImpl
+                (userStatusRepository, userStatusNameService, userService);
+
+        assertEquals(
+                userStatusService.updateUserStatus(
+                        userStatusModel.getUserId(),
+                        userStatusModel.getOnlineStatus()),
+                userStatusModel);
     }
 
 }

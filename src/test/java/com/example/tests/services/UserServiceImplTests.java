@@ -6,7 +6,6 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
 import com.example.service.impl.UserServiceImpl;
-import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

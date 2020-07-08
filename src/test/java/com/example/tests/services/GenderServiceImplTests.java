@@ -5,7 +5,6 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.repository.GenderRepository;
 import com.example.service.impl.GenderServiceImpl;
-import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

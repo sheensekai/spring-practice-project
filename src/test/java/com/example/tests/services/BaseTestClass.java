@@ -1,4 +1,4 @@
-package com.example.tests;
+package com.example.tests.services;
 
 import com.example.GenderEnum;
 import com.example.UserStatusEnum;

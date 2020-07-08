@@ -7,7 +7,6 @@ import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
 import com.example.service.impl.GenderServiceImpl;
 import com.example.service.impl.UserInfoServiceImpl;
-import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
