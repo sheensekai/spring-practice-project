@@ -11,10 +11,10 @@ public class GenderDTO {
     private int genderId;
 
     @NonNull
-    private String gender;
+    private String genderName;
 
     public GenderDTO(GenderModel genderModel) {
-        this(genderModel.getGender().toString().toLowerCase());
+        this(genderModel.getGenderEnum().toString().toLowerCase());
         this.genderId = genderModel.getGenderId();
     }
 }
