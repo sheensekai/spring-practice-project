@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UserTests {
 
     @Test
-    public void testUpdateState() {
+    public void userHasActualStateWhenUpdateStatusIsCalled() {
         User user = new User();
         for (int statusId = 1; statusId <= 10; ++statusId) {
             UserStatus userStatus = new UserStatus(System.currentTimeMillis(), user.getUserId(), statusId);

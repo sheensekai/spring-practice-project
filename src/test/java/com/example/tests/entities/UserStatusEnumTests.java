@@ -25,7 +25,7 @@ public class UserStatusEnumTests {
     }
 
     @Test
-    public void testFindEnumRightStatusNames() {
+    public void findEnumReturnsEnumsWhenRightStatusNamesPassed() {
         for (String statusName : rightNames) {
             UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(statusName);
             assertNotNull(userStatusEnum, "Couldn't findEnum for right status name " + statusName);
@@ -33,7 +33,7 @@ public class UserStatusEnumTests {
     }
 
     @Test
-    public void testFindEnumWrongStatusNames() {
+    public void findEnumThrowsExceptionWhenWrongStatusNamesPassed() {
         for (String statusName : wrongNames) {
             UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(statusName);
             assertNull(userStatusEnum, "Could findEnum for wrong status name " + statusName);
