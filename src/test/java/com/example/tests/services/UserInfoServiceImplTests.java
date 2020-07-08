@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class UserInfoServiceTests extends BaseTestClass {
+public class UserInfoServiceImplTests extends BaseTestClass {
 
     @BeforeEach
     public void initBeforeEach() {
@@ -59,7 +59,6 @@ public class UserInfoServiceTests extends BaseTestClass {
         for (int i = 0; i < userInfoList.size(); ++i) {
             UserInfo userInfo = userInfoList.get(i);
             UserInfoModel userInfoModel = userInfoModelList.get(i);
-            Optional<UserInfo> optionalUserInfo = Optional.of(userInfo);
             GenderModel genderModel = new GenderModel
                     (userInfoModel.getGenderEnum().toString().toLowerCase(),
                             userInfo.getGenderId());
@@ -91,7 +90,6 @@ public class UserInfoServiceTests extends BaseTestClass {
         for (int i = 0; i < userInfoList.size(); ++i) {
             UserInfo userInfo = userInfoList.get(i);
             UserInfoModel userInfoModel = userInfoModelList.get(i);
-            Optional<UserInfo> optionalUserInfo = Optional.of(userInfo);
             GenderModel genderModel = new GenderModel
                     (userInfoModel.getGenderEnum().toString().toLowerCase(),
                             userInfo.getGenderId());
