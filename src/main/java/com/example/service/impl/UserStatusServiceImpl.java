@@ -8,6 +8,8 @@ import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusRepository;
+import com.example.service.UserService;
+import com.example.service.UserStatusNameService;
 import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,18 @@ import java.util.List;
 
 @Service
 public class UserStatusServiceImpl implements UserStatusService {
-    @Autowired
-    private UserStatusRepository userStatusRepository;
+    private final UserStatusRepository userStatusRepository;
+    private final UserStatusNameService userStatusNameService;
+    private final UserService userService;
 
-    @Autowired
-    private UserStatusNameServiceImpl userStatusNameService;
-
-    @Autowired
-    private UserServiceImpl userService;
+    public UserStatusServiceImpl(
+            @Autowired UserStatusRepository userStatusRepository,
+            @Autowired UserStatusNameService userStatusNameService,
+            @Autowired UserService userService) {
+        this.userStatusRepository = userStatusRepository;
+        this.userStatusNameService = userStatusNameService;
+        this.userService = userService;
+    }
 
     public UserStatusModel updateUserStatus(int userId, UserStatusEnum onlineStatus) {
         if (!this.userService.existsByUserId(userId)) {

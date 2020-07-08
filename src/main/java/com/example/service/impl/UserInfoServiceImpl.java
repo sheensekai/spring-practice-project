@@ -6,16 +6,22 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
+import com.example.service.GenderService;
 import com.example.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
-    @Autowired
-    private UserInfoRepository userInfoRepository;
-    @Autowired
-    private GenderServiceImpl genderService;
+    private final UserInfoRepository userInfoRepository;
+    private final GenderService genderService;
+
+    public UserInfoServiceImpl(
+            @Autowired UserInfoRepository userInfoRepository,
+            @Autowired GenderService genderService) {
+        this.userInfoRepository = userInfoRepository;
+        this.genderService = genderService;
+    }
 
     public UserInfoModel addUserInfo(UserInfoModel userInfoModel) {
         if (this.userInfoRepository.existsById(userInfoModel.getUserId())) {

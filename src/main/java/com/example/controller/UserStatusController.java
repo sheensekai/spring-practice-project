@@ -16,8 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/userStatus")
 public class UserStatusController {
-    @Autowired
-    UserStatusService userStatusService;
+    private final UserStatusService userStatusService;
+
+    public UserStatusController(@Autowired UserStatusService userStatusService) {
+        this.userStatusService = userStatusService;
+    }
 
     @RequestMapping("/statistics")
     public List<UserStatusDTO> getStatistics

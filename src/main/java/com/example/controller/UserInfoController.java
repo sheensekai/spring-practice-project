@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/userInfo")
 public class UserInfoController {
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
+
+    public UserInfoController(@Autowired UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     @PostMapping("/{userId}")
     public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)

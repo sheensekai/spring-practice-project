@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserServiceImpl(@Autowired UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UserModel addUser(UserModel userModel) {
         if (this.containsByUserName(userModel.getUserName())) {

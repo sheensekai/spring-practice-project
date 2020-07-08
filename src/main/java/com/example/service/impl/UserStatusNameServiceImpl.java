@@ -13,8 +13,11 @@ import java.util.List;
 
 @Service
 public class UserStatusNameServiceImpl implements UserStatusNameService {
-    @Autowired
-    UserStatusNameRepository userStatusNameRepository;
+    private final UserStatusNameRepository userStatusNameRepository;
+
+    public UserStatusNameServiceImpl(@Autowired UserStatusNameRepository userStatusNameRepository) {
+        this.userStatusNameRepository = userStatusNameRepository;
+    }
 
     public List<UserStatusNameModel> getAllStatuses() {
         List<UserStatusName> userStatusList = this.userStatusNameRepository.findAll();

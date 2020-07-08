@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GenderServiceImpl implements GenderService {
-    @Autowired
-    private GenderRepository genderRepository;
+    private final GenderRepository genderRepository;
+
+    public GenderServiceImpl(@Autowired GenderRepository genderRepository) {
+        this.genderRepository = genderRepository;
+    }
 
     public GenderModel addGender(GenderModel genderModel) {
         if (this.existsGender(genderModel)) {

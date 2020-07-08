@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/genders")
 public class GenderController {
-    @Autowired
-    private GenderService genderService;
+    private final GenderService genderService;
+
+    public GenderController(@Autowired GenderService genderService) {
+        this.genderService = genderService;
+    }
 
     @PostMapping("/")
     public GenderDTO addGender(@RequestBody GenderDTO genderDTO)

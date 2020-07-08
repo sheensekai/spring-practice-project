@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserStatusService userStatusService;
 
-    @Autowired
-    private UserStatusService userStatusService;
+    public UserController
+            (@Autowired UserService userService,
+             @Autowired UserStatusService userStatusService) {
+        this.userService = userService;
+        this.userStatusService = userStatusService;
+    }
 
     @PostMapping("/")
     public UserDTO addUser(@RequestBody UserDTO userDTO)
