@@ -41,7 +41,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .orElseThrow( () -> new ResourceNotFoundException("UserInfo with userId " + userId + " doesn't exist"));
 
         GenderModel foundGenderModel = this.genderService.findGenderByGenderId(userId);
-        String genderString = foundGenderModel.getGender().toString().toLowerCase();
+        String genderString = foundGenderModel.getGenderEnum().toString().toLowerCase();
         return new UserInfoModel(userInfo, genderString);
     }
 

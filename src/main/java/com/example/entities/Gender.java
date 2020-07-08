@@ -1,15 +1,13 @@
 package com.example.entities;
 
 import com.example.model.GenderModel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "Genders")
@@ -21,9 +19,9 @@ public class Gender {
 
     @NonNull
     @Column(name = "Gender", unique = true)
-    private String gender;
+    private String genderName;
 
     public Gender(GenderModel genderModel) {
-        this(genderModel.getGender().toString().toLowerCase());
+        this(genderModel.getGenderEnum().toString().toLowerCase());
     }
 }

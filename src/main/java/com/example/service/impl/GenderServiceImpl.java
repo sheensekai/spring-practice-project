@@ -19,7 +19,7 @@ public class GenderServiceImpl implements GenderService {
 
     public GenderModel addGender(GenderModel genderModel) {
         if (this.existsGender(genderModel)) {
-            throw new ResourceAlreadyExistsException("Gender " + genderModel.getGender().toString() + " already exists");
+            throw new ResourceAlreadyExistsException("Gender " + genderModel.getGenderEnum().toString() + " already exists");
         }
 
         Gender newGender = new Gender(genderModel);
@@ -42,6 +42,6 @@ public class GenderServiceImpl implements GenderService {
     }
 
     public boolean existsGender(GenderModel genderModel) {
-        return this.genderRepository.existsByGender(genderModel.getGender().toString().toLowerCase());
+        return this.genderRepository.existsByGender(genderModel.getGenderEnum().toString().toLowerCase());
     }
 }

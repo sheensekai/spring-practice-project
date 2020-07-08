@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "UserStatistics")
 public class UserStatus {
