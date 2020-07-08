@@ -5,46 +5,16 @@ import com.example.exception.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.repository.GenderRepository;
 import com.example.service.impl.GenderServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
+import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GenderServiceImplTests {
-    private GenderServiceImpl genderService;
-    private static GenderRepository genderRepository;
-    private static List<String> rightNames;
-    private static List<String> wrongNames;
-    private static List<GenderModel> genderModelList;
-    private static List<Gender> genderList;
-
-    @BeforeAll
-    static void init() {
-        rightNames = new ArrayList<>();
-        rightNames.addAll(Arrays.asList("male", "MALE", "MalE", "female",
-                "FEMALE", "FEmalE", "unknown", "UNKNOWN", "UnknoWN"));
-
-        wrongNames = new ArrayList<>();
-        wrongNames.addAll(Arrays.asList("notmale", "malemale", "fefefefemale", "notfemale", "asdfasdgasd",
-                "femal", "mal", "email", "femalemale"));
-
-        genderList = new ArrayList<>();
-        for (int i = 0; i < rightNames.size(); ++i) {
-            genderList.add(new Gender(i, rightNames.get(i)));
-        }
-
-        genderModelList = new ArrayList<>();
-        for (int i = 0; i < rightNames.size(); ++i) {
-            genderModelList.add(new GenderModel(genderList.get(i)));
-        }
-    }
+public class GenderServiceImplTests extends BaseTestClass {
 
     @BeforeEach
     public void initBeforeEach() {
@@ -93,7 +63,8 @@ public class GenderServiceImplTests {
     public void whenGenderIsNotContainedByGenderNameThrowsException() {
             Mockito.when(genderRepository.findByGender(Mockito.anyString())).thenThrow(new ResourceNotFoundException(""));
             genderService = new GenderServiceImpl(genderRepository);
-            assertThrows(ResourceNotFoundException.class, () -> genderService.findGenderByGender(rightNames.get(0)));
+            assertThrows(ResourceNotFoundException.class, () ->
+                    genderService.findGenderByGender(rightNameList.get(0)));
     }
 
     @Test
