@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class GenderControllerTests {
     private static GenderServiceImpl genderService;
     private static GenderController genderController;
+
     @BeforeAll
     static void init() {
         genderService = Mockito.mock(GenderServiceImpl.class);
