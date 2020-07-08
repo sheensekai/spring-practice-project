@@ -12,7 +12,6 @@ import com.example.service.impl.UserStatusServiceImpl;
 import com.example.tests.BaseTestClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -65,6 +64,7 @@ public class UserStatusServiceImplTests extends BaseTestClass {
     public void whenStatusIdOnlyPassedReturnsRightUserStatus() {
         for (int i = 0; i < 3; ++i) {
             UserStatusName userStatusName = userStatusNameList.get(i);
+            UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(i);
             List<UserStatus> toCompare = new ArrayList<>();
             for (UserStatus userStatus : userStatusList) {
                 if (userStatus.getStatusId() == userStatusName.getStatusId()) {
@@ -78,14 +78,16 @@ public class UserStatusServiceImplTests extends BaseTestClass {
             }
 
             Mockito.when(userStatusRepository
-                    .findByStatusIdAndUpdateTimeGreaterThan(userStatusName.getStatusId(), Mockito.anyLong()))
+                    .findByStatusIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
                     .thenReturn(toCompare);
             Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
+            Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString())).thenReturn(userStatusNameModel);
             userStatusService = new UserStatusServiceImpl
                     (userStatusRepository, userStatusNameService, userService);
 
             assertEquals(
-                    userStatusService.getStatistics(i, null, null),
+                    userStatusService.getStatistics(
+                            null, UserStatusEnum.findEnum(userStatusName.getStatusName()), null),
                     toCompareModel);
         }
     }
