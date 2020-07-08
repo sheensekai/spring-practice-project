@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserStatusEnumTests {
     private static List<String> rightNames;
-    private static List<String> wrongName;
+    private static List<String> wrongNames;
 
     @BeforeAll
     static void init() {
@@ -20,8 +20,8 @@ public class UserStatusEnumTests {
         rightNames.addAll(Arrays.asList("online", "ONLINE", "onLInE", "offline",
                 "OFFLINE", "OFflINE", "unknown", "UNKNOWN", "unKNown"));
 
-        wrongName = new ArrayList<>();
-        wrongName.addAll(Arrays.asList("onlin", "line", "notonline", "ofline", "known", "notoffline"));
+        wrongNames = new ArrayList<>();
+        wrongNames.addAll(Arrays.asList("onlin", "line", "notonline", "ofline", "known", "notoffline"));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class UserStatusEnumTests {
 
     @Test
     public void testFindEnumWrongStatusNames() {
-        for (String statusName : wrongName) {
+        for (String statusName : wrongNames) {
             UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(statusName);
             assertNull(userStatusEnum, "Could findEnum for wrong status name " + statusName);
         }
