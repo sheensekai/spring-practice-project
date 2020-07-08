@@ -1,14 +1,11 @@
 package com.example.tests;
 
 import com.example.GenderEnum;
-import com.example.entities.Gender;
-import com.example.entities.UserInfo;
-import com.example.model.GenderModel;
-import com.example.model.UserInfoModel;
-import com.example.repository.GenderRepository;
-import com.example.repository.UserInfoRepository;
-import com.example.service.impl.GenderServiceImpl;
-import com.example.service.impl.UserInfoServiceImpl;
+import com.example.UserStatusEnum;
+import com.example.entities.*;
+import com.example.model.*;
+import com.example.repository.*;
+import com.example.service.impl.*;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
@@ -18,9 +15,15 @@ import java.util.List;
 public class BaseTestClass {
     protected static GenderRepository genderRepository;
     protected static UserInfoRepository userInfoRepository;
+    protected static UserRepository userRepository;
+    protected static UserStatusNameRepository userStatusNameRepository;
+    protected static UserStatusRepository userStatusRepository;
 
     protected GenderServiceImpl genderService;
     protected static UserInfoServiceImpl userInfoService;
+    protected static UserServiceImpl userService;
+    protected static UserStatusNameServiceImpl userStatusNameService;
+    protected static UserStatusServiceImpl userStatusService;
 
     protected static List<String> rightNameList;
     protected static List<String> wrongNameList;
@@ -28,8 +31,17 @@ public class BaseTestClass {
     protected static List<Gender> genderList;
     protected static List<GenderModel> genderModelList;
 
+    protected static List<User> userList;
+    protected static List<UserModel> userModelList;
+
     protected static List<UserInfo> userInfoList;
     protected static List<UserInfoModel> userInfoModelList;
+
+    protected static List<UserStatusName> userStatusNameList;
+    protected static List<UserStatusNameModel> userStatusNameModelList;
+
+    protected static List<UserStatus> userStatusList;
+    protected static List<UserStatusModel> userStatusModelList;
 
     @BeforeAll
     static void init() {
@@ -60,5 +72,35 @@ public class BaseTestClass {
         userInfoModelList.add(new UserInfoModel(userInfoList.get(0), GenderEnum.MALE.toString().toLowerCase()));
         userInfoModelList.add(new UserInfoModel(userInfoList.get(1), GenderEnum.MALE.toString().toLowerCase()));
         userInfoModelList.add(new UserInfoModel(userInfoList.get(2), GenderEnum.FEMALE.toString().toLowerCase()));
+
+        userList = new ArrayList<>();
+        userList.add(new User(1, "sheensekai", "sheensekai@ya.ru", 20L, 1, 10L));
+        userList.add(new User(2, "rstvsl", "yanerustam@ya.ru", 40L, 1, 20L));
+        userList.add(new User(3, "nastya123", "asdfasdf@ya.ru", 50L, 2, 50L));
+
+        userModelList = new ArrayList<>();
+        userModelList.add(new UserModel(userList.get(0)));
+        userModelList.add(new UserModel(userList.get(1)));
+        userModelList.add(new UserModel(userList.get(2)));
+
+        userStatusNameList = new ArrayList<>();
+        userStatusNameList.add(new UserStatusName(1, UserStatusEnum.ONLINE.toString().toLowerCase()));
+        userStatusNameList.add(new UserStatusName(2, UserStatusEnum.OFFLINE.toString().toLowerCase()));
+        userStatusNameList.add(new UserStatusName(3, UserStatusEnum.UNKNOWN.toString().toLowerCase()));
+
+        userStatusNameModelList = new ArrayList<>();
+        userStatusNameModelList.add(new UserStatusNameModel(userStatusNameList.get(0)));
+        userStatusNameModelList.add(new UserStatusNameModel(userStatusNameList.get(1)));
+        userStatusNameModelList.add(new UserStatusNameModel(userStatusNameList.get(2)));
+
+        userStatusList = new ArrayList<>();
+        userStatusList.add(new UserStatus(1L, 10L, 1, 1));
+        userStatusList.add(new UserStatus(2L, 40L, 2, 1));
+        userStatusList.add(new UserStatus(3L, 100L, 3, 2));
+
+        userStatusModelList = new ArrayList<>();
+        userStatusModelList.add(new UserStatusModel(userStatusList.get(0), UserStatusEnum.ONLINE));
+        userStatusModelList.add(new UserStatusModel(userStatusList.get(1), UserStatusEnum.ONLINE));
+        userStatusModelList.add(new UserStatusModel(userStatusList.get(2), UserStatusEnum.OFFLINE));
     }
 }
