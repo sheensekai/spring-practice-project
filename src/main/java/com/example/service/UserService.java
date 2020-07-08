@@ -1,7 +1,9 @@
 package com.example.service;
 
 import com.example.model.UserModel;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
     UserModel addUser(UserModel userModel);
     UserModel updateUser(UserModel userModel);

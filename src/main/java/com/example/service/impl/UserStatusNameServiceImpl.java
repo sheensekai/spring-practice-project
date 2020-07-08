@@ -26,7 +26,7 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
         return answer;
     }
 
-    public UserStatusNameModel getStatusById(int statusId) {
+    public UserStatusNameModel getStatusByStatusId(int statusId) {
         UserStatusName userStatusName = this.userStatusNameRepository.findById(statusId)
                 .orElseThrow(() -> new ResourceNotFoundException("UserStatusName with id " + statusId + " doesn't exist"));
         return new UserStatusNameModel(userStatusName);
@@ -38,7 +38,7 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
         return new UserStatusNameModel(userStatusName);
     }
 
-    public boolean existsbyId(int statusId) {
+    public boolean existsByStatusId(int statusId) {
         return this.userStatusNameRepository.existsById(statusId);
     }
 }

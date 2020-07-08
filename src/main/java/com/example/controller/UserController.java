@@ -7,8 +7,8 @@ import com.example.exception.ResourceAlreadyExistsException;
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
-import com.example.service.impl.UserServiceImpl;
-import com.example.service.impl.UserStatusServiceImpl;
+import com.example.service.UserService;
+import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    private UserStatusServiceImpl userStatusService;
+    private UserStatusService userStatusService;
 
     @PostMapping("/")
     public UserDTO addUser(@RequestBody UserDTO user)
