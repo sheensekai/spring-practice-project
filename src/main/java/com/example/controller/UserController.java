@@ -22,13 +22,13 @@ public class UserController {
     private UserStatusService userStatusService;
 
     @PostMapping("/")
-    public UserDTO addUser(@RequestBody UserDTO user)
+    public UserDTO addUser(@RequestBody UserDTO userDTO)
         throws ResourceAlreadyExistsException {
-        UserModel newUser = new UserModel(user);
-        newUser = this.userService.addUser(newUser);
+        UserModel newUserModel = new UserModel(userDTO);
+        newUserModel = this.userService.addUser(newUserModel);
 
-        this.userStatusService.updateUserStatus(user.getUserId(), UserStatusEnum.ONLINE);
-        return new UserDTO(newUser);
+        this.userStatusService.updateUserStatus(userDTO.getUserId(), UserStatusEnum.ONLINE);
+        return new UserDTO(newUserModel);
     }
 
     @PutMapping("/updateStatus")
@@ -41,14 +41,14 @@ public class UserController {
             throw new ResourceNotFoundException("Enum for " + newStatus + " doesn't exist");
         }
 
-        UserStatusModel userStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
-        return new UserStatusDTO(userStatusModel);
+        UserStatusModel updatedUserStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
+        return new UserStatusDTO(updatedUserStatusModel);
     }
 
     @GetMapping("/addUser")
     public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
         throws ResourceNotFoundException {
-        UserModel user = this.userService.getUserByUserId(userId);
-        return new UserDTO(user);
+        UserModel foundUserModel = this.userService.getUserByUserId(userId);
+        return new UserDTO(foundUserModel);
     }
 }

@@ -27,11 +27,11 @@ public class UserInfoController {
     @PutMapping("/{userId}")
     public UserInfoDTO updateUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)
         throws ResourceNotFoundException {
-        UserInfoModel userInfoModel = new UserInfoModel(userInfoDTO);
-        userInfoModel.setUserId(userId);
+        UserInfoModel updatedUserInfoModel = new UserInfoModel(userInfoDTO);
+        updatedUserInfoModel.setUserId(userId);
 
-        userInfoModel = this.userInfoService.updateUserInfo(userInfoModel);
-        return new UserInfoDTO(userInfoModel);
+        updatedUserInfoModel = this.userInfoService.updateUserInfo(updatedUserInfoModel);
+        return new UserInfoDTO(updatedUserInfoModel);
     }
 
     @GetMapping("/{userId}")

@@ -20,12 +20,12 @@ public class UserDTO {
     private long passwordHash;
 
     private int statusId;
-    private long updatetime;
+    private long updateTime;
 
-    private void userDTOInit(int userId, int statusId, long updatetime) {
+    private void userDTOInit(int userId, int statusId, long updateTime) {
         this.userId = userId;
         this.statusId = statusId;
-        this.updatetime = updatetime;
+        this.updateTime = updateTime;
     }
 
     public UserDTO(UserModel userModel) {

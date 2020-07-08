@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class UserStatusNameDTO {
-    private int statusid;
+    private int statusId;
 
     @NonNull
     private String statusName;
