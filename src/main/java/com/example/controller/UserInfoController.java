@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.dto.UserInfoDTO;
 import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserInfoModel;
 import com.example.service.UserInfoService;
 import com.example.service.UserService;
@@ -29,7 +30,7 @@ public class UserInfoController {
         newUserInfoModel.setUserId(userId);
 
         if (!userService.existsByUserId(userId)) {
-            throw new ResourceNotFoundException("User with userId " + userId + " doesn't exist");
+            throw new UserNotFoundException("User with userId " + userId + " doesn't exist");
         }
 
         newUserInfoModel = this.userInfoService.addUserInfo(newUserInfoModel);
@@ -43,7 +44,7 @@ public class UserInfoController {
         updatedUserInfoModel.setUserId(userId);
 
         if (!userService.existsByUserId(userId)) {
-            throw new ResourceNotFoundException("User with userId " + userId + " doesn't exist");
+            throw new UserNotFoundException("User with userId " + userId + " doesn't exist");
         }
 
         updatedUserInfoModel = this.userInfoService.updateUserInfo(updatedUserInfoModel);
@@ -55,7 +56,7 @@ public class UserInfoController {
         throws ResourceNotFoundException {
 
         if (!userService.existsByUserId(userId)) {
-            throw new ResourceNotFoundException("User with userId " + userId + " doesn't exist");
+            throw new UserNotFoundException("User with userId " + userId + " doesn't exist");
         }
 
         UserInfoModel foundUserInfoModel =  this.userInfoService.getUserInfoByUserId(userId);
