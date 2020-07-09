@@ -1,13 +1,14 @@
 package com.example.service.impl;
 
 import com.example.entities.UserInfo;
-import com.example.exception.ResourceAlreadyExistsException;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.exists.ResourceAlreadyExistsException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
 import com.example.service.GenderService;
 import com.example.service.UserInfoService;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     public UserInfoServiceImpl(
             @Autowired UserInfoRepository userInfoRepository,
-            @Autowired GenderService genderService) {
+            @Autowired GenderService genderService,
+            @Autowired UserService userService) {
         this.userInfoRepository = userInfoRepository;
         this.genderService = genderService;
     }

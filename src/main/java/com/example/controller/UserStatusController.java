@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.UserStatusEnum;
 import com.example.dto.UserStatusDTO;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;

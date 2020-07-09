@@ -1,7 +1,7 @@
 package com.example.tests.services;
 
 import com.example.entities.UserInfo;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
