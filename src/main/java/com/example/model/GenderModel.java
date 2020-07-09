@@ -3,17 +3,17 @@ package com.example.model;
 import com.example.GenderEnum;
 import com.example.dto.GenderDTO;
 import com.example.entities.Gender;
-import com.example.exception.GenderEnumDoesntExistException;
+import com.example.exception.notfound.GenderEnumDoesntExistException;
 import lombok.Data;
 
 @Data
 public class GenderModel {
     private int genderId;
-    private GenderEnum gender;
+    private GenderEnum genderEnum;
 
     public GenderModel(String gender, int genderId) {
-        this.gender = GenderEnum.findEnum(gender);
-        if (this.gender == null) {
+        this.genderEnum = GenderEnum.findEnum(gender);
+        if (this.genderEnum == null) {
             throw new GenderEnumDoesntExistException("Enum for " + gender + " doesn't exist");
         }
 
@@ -21,10 +21,10 @@ public class GenderModel {
     }
 
     public GenderModel(GenderDTO genderDTO) {
-        this(genderDTO.getGender(), genderDTO.getGenderId());
+        this(genderDTO.getGenderName(), genderDTO.getGenderId());
     }
 
     public GenderModel(Gender gender) {
-        this(gender.getGender(), gender.getGenderId());
+        this(gender.getGenderName(), gender.getGenderId());
     }
 }

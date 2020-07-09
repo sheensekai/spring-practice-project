@@ -1,32 +1,33 @@
 package com.example.dto;
 
 import com.example.model.UserInfoModel;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfoDTO {
 
     private int userId;
 
-    @NonNull
     private String firstName;
 
-    @NonNull
     private String lastName;
 
-    @NonNull
     private String gender;
 
-    @NonNull
     private long birthDate;
 
+    public UserInfoDTO(String firstName, String lastName, String gender, long birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+    }
+
     public UserInfoDTO(UserInfoModel userInfoModel) {
-        this(userInfoModel.getFirstName(), userInfoModel.getLastName(),
+        this(userInfoModel.getUserId(), userInfoModel.getFirstName(), userInfoModel.getLastName(),
                 userInfoModel.getGenderEnum().toString().toLowerCase(), userInfoModel.getBirthDate());
-        this.userId = userInfoModel.getUserId();
     }
 
 }

@@ -7,32 +7,28 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "UserInfo")
+@Table
 public class UserInfo {
 
     @Id
     private int userId;
 
-    @NonNull
-    @Column(name = "FirstName")
+    @Column
     private String firstName;
 
-    @NonNull
-    @Column(name = "LastName")
+    @Column
     private String lastName;
 
-    @NonNull
-    @Column(name = "GenderId")
+    @Column
     private int genderId;
 
-    @NonNull
-    @Column(name = "BirthDate")
+    @Column
     private long birthDate;
 
     public UserInfo(UserInfoModel userInfo, int genderId) {
-        this(userInfo.getFirstName(), userInfo.getLastName(), genderId, userInfo.getBirthDate());
+        this(userInfo.getUserId(), userInfo.getFirstName(), userInfo.getLastName(), genderId, userInfo.getBirthDate());
     }
 
 }

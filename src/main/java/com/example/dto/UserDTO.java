@@ -1,35 +1,31 @@
 package com.example.dto;
 
 import com.example.model.UserModel;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     private int userId;
 
-    @NonNull
     private String userName;
 
-    @NonNull
     private String email;
 
-    @NonNull
     private long passwordHash;
 
     private int statusId;
-    private long updatetime;
+    private long updateTime;
 
-    private void userDTOInit(int userId, int statusId, long updatetime) {
-        this.userId = userId;
-        this.statusId = statusId;
-        this.updatetime = updatetime;
+    public UserDTO(String userName, String email, long passwordHash) {
+        this.userName = userName;
+        this.email = email;
+        this.passwordHash = passwordHash;
     }
 
     public UserDTO(UserModel userModel) {
-        this(userModel.getUserName(), userModel.getEmail(), userModel.getPasswordHash());
-        this.userDTOInit(userModel.getUserId(), userModel.getStatusId(), userModel.getUpdatetime());
+        this(userModel.getUserId(), userModel.getUserName(), userModel.getEmail(), userModel.getPasswordHash(),
+                userModel.getStatusId(), userModel.getUpdateTime());
     }
 }

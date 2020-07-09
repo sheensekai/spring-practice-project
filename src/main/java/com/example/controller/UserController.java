@@ -3,8 +3,9 @@ package com.example.controller;
 import com.example.UserStatusEnum;
 import com.example.dto.UserDTO;
 import com.example.dto.UserStatusDTO;
-import com.example.exception.ResourceAlreadyExistsException;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.exists.UserAlreadyExistsException;
+import com.example.exception.notfound.StatusEnumDoesntExist;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.service.UserService;
@@ -15,40 +16,45 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserStatusService userStatusService;
 
-    @Autowired
-    private UserStatusService userStatusService;
+    public UserController
+            (@Autowired UserService userService,
+             @Autowired UserStatusService userStatusService) {
+        this.userService = userService;
+        this.userStatusService = userStatusService;
+    }
 
-    @PostMapping("/")
-    public UserDTO addUser(@RequestBody UserDTO user)
-        throws ResourceAlreadyExistsException {
-        UserModel newUser = new UserModel(user);
-        newUser = this.userService.addUser(newUser);
+    @PostMapping("/addUser")
+    public UserDTO addUser(@RequestBody UserDTO userDTO)
+        throws UserAlreadyExistsException {
+        UserModel newUserModel = new UserModel(userDTO);
+        newUserModel = this.userService.addUser(newUserModel);
 
-        this.userStatusService.updateUserStatus(user.getUserId(), UserStatusEnum.ONLINE);
-        return new UserDTO(newUser);
+        this.userStatusService.updateUserStatus(newUserModel.getUserId(), UserStatusEnum.ONLINE);
+        newUserModel = this.userService.getUserByUserId(newUserModel.getUserId());
+        return new UserDTO(newUserModel);
     }
 
     @PutMapping("/updateStatus")
     public UserStatusDTO updateUserOnlineStatus(
             @RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "newStatus") String newStatus)
-        throws ResourceNotFoundException {
+        throws UserNotFoundException, StatusEnumDoesntExist {
         UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(newStatus);
         if (userStatusEnum == null) {
-            throw new ResourceNotFoundException("Enum for " + newStatus + " doesn't exist");
+            throw new StatusEnumDoesntExist("Enum for " + newStatus + " doesn't exist");
         }
 
-        UserStatusModel userStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
-        return new UserStatusDTO(userStatusModel);
+        UserStatusModel updatedUserStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
+        return new UserStatusDTO(updatedUserStatusModel);
     }
 
-    @GetMapping("/addUser")
+    @GetMapping("/getUser")
     public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
-        throws ResourceNotFoundException {
-        UserModel user = this.userService.getUserByUserid(userId);
-        return new UserDTO(user);
+        throws UserNotFoundException {
+        UserModel foundUserModel = this.userService.getUserByUserId(userId);
+        return new UserDTO(foundUserModel);
     }
 }

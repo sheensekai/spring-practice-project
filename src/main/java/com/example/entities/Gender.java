@@ -1,29 +1,25 @@
 package com.example.entities;
 
 import com.example.model.GenderModel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "Genders")
+@Table
 public class Gender {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int genderId;
 
-    @NonNull
-    @Column(name = "Gender", unique = true)
-    private String gender;
+    @Column(unique = true)
+    private String genderName;
 
     public Gender(GenderModel genderModel) {
-        this(genderModel.getGender().toString().toLowerCase());
+        this(genderModel.getGenderId(), genderModel.getGenderEnum().toString().toLowerCase());
     }
 }
