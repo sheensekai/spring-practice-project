@@ -6,6 +6,7 @@ import com.example.dto.UserDTO;
 import com.example.dto.UserStatusDTO;
 import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.service.UserStatusService;
@@ -33,10 +34,10 @@ public class UserControllerTests {
     @Test
     public void whenUserIsContainedAddUserThrowsException() {
         UserDTO userDTO = new UserDTO("name", "email", 1L);
-        Mockito.when(userService.addUser(Mockito.any()))
-                .thenThrow(ResourceAlreadyExistsException.class);
-        assertThrows(ResourceAlreadyExistsException.class,
-                () -> userController.addUser(userDTO));
+
+        Mockito.when(userService.addUser(Mockito.any())).thenThrow(UserNotFoundException.class);
+
+        assertThrows(UserNotFoundException.class, () -> userController.addUser(userDTO));
     }
 
     @Test
@@ -49,8 +50,7 @@ public class UserControllerTests {
         userModel.setUpdatetime(7L);
         UserDTO toCompare = new UserDTO(userModel);
 
-        Mockito.when(userService.addUser(Mockito.any()))
-                .thenReturn(userModel);
+        Mockito.when(userService.addUser(Mockito.any())).thenReturn(userModel);
 
         assertEquals(userController.addUser(userDTO), toCompare);
     }
@@ -58,21 +58,21 @@ public class UserControllerTests {
     @Test
     public void whenUserIsNotContainedUpdateUserOnlineStatusThrowsException() {
         Mockito.when(userStatusService.updateUserStatus(Mockito.anyInt(), Mockito.any()))
-                .thenThrow(ResourceNotFoundException.class);
+                .thenThrow(UserNotFoundException.class);
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> userController.updateUserOnlineStatus(
+        assertThrows(UserNotFoundException.class, () -> userController.updateUserOnlineStatus(
                         0, UserStatusEnum.ONLINE.toString().toLowerCase()));
     }
 
     @Test
-    public void whenUserIsContainedUpdateUserONlineStatusReturnsUpdatedStatus() {
+    public void whenUserIsContainedUpdateUserOnlineStatusReturnsUpdatedStatus() {
         UserStatusModel userStatusModel = new UserStatusModel(
                 1L, 2, UserStatusEnum.ONLINE, 10L );
         UserStatusDTO toCompare = new UserStatusDTO(userStatusModel);
 
         Mockito.when(userStatusService.updateUserStatus(Mockito.anyInt(), Mockito.any()))
                 .thenReturn(userStatusModel);
+
         assertEquals(userController.updateUserOnlineStatus(
                 2, "online"), toCompare);
     }
@@ -80,8 +80,9 @@ public class UserControllerTests {
     @Test
     public void whenUserIsNotContainedGetUserByIdThrowsException() {
         Mockito.when(userService.getUserByUserId(Mockito.anyInt()))
-                .thenThrow(ResourceNotFoundException.class);
-        assertThrows(ResourceNotFoundException.class,
+                .thenThrow(UserNotFoundException.class);
+
+        assertThrows(UserNotFoundException.class,
                 () -> userController.getUserById(1));
     }
 
@@ -92,6 +93,7 @@ public class UserControllerTests {
 
         Mockito.when(userService.getUserByUserId(Mockito.anyInt()))
                 .thenReturn(userModel);
+
         assertEquals(userController.getUserById(0), toCompare);
     }
 }

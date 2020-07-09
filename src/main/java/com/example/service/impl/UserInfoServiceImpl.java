@@ -10,7 +10,6 @@ import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
 import com.example.service.GenderService;
 import com.example.service.UserInfoService;
-import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     public UserInfoServiceImpl(
             @Autowired UserInfoRepository userInfoRepository,
-            @Autowired GenderService genderService,
-            @Autowired UserService userService) {
+            @Autowired GenderService genderService) {
         this.userInfoRepository = userInfoRepository;
         this.genderService = genderService;
     }
@@ -53,7 +51,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     public UserInfoModel updateUserInfo(UserInfoModel userInfoModel) {
         if (!this.userInfoRepository.existsById(userInfoModel.getUserId())) {
-            throw new ResourceNotFoundException("UserInfo with userId " + userInfoModel.getUserId() + " doesn't exist");
+            throw new UserInfoNotFoundException("UserInfo with userId " + userInfoModel.getUserId() + " doesn't exist");
         }
 
         String genderString = userInfoModel.getGenderEnum().toString().toLowerCase();
