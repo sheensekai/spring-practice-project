@@ -6,6 +6,7 @@ import com.example.model.UserStatusNameModel;
 import com.example.service.UserStatusNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ public class UserStatusNameController {
     }
 
     @PostMapping("/")
-    public UserStatusNameDTO addUserStatusName(UserStatusNameDTO userStatusNameDTO)
+    public UserStatusNameDTO addUserStatusName(@RequestBody UserStatusNameDTO userStatusNameDTO)
         throws UserStatusNameAlreadyExistsException {
         UserStatusNameModel userStatusNameModel = new UserStatusNameModel(userStatusNameDTO);
 

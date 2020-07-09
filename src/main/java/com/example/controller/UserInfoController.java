@@ -24,7 +24,7 @@ public class UserInfoController {
     }
 
     @PostMapping("/{userId}")
-    public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)
+    public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, @RequestBody UserInfoDTO userInfoDTO)
         throws UserNotFoundException, UserInfoAlreadyExistsException {
         UserInfoModel newUserInfoModel = new UserInfoModel(userInfoDTO);
         newUserInfoModel.setUserId(userId);
@@ -38,7 +38,7 @@ public class UserInfoController {
     }
 
     @PutMapping("/{userId}")
-    public UserInfoDTO updateUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)
+    public UserInfoDTO updateUserInfo(@PathVariable(name = "userId") Integer userId, @RequestBody UserInfoDTO userInfoDTO)
         throws UserNotFoundException, UserInfoNotFoundException {
         UserInfoModel updatedUserInfoModel = new UserInfoModel(userInfoDTO);
         updatedUserInfoModel.setUserId(userId);
