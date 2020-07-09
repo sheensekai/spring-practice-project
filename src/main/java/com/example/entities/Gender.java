@@ -18,7 +18,7 @@ public class Gender {
     private int genderId;
 
     @NonNull
-    @Column(name = "Gender", unique = true)
+    @Column(name = "GenderName", unique = true)
     private String genderName;
 
     public Gender(GenderModel genderModel) {

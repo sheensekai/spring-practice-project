@@ -30,7 +30,7 @@ public class GenderServiceImpl implements GenderService {
 
     public GenderModel findGenderByGender(String genderString)
         throws GenderNotFoundException {
-        Gender gender = this.genderRepository.findByGender(genderString)
+        Gender gender = this.genderRepository.findByGenderName(genderString)
                 .orElseThrow(() -> new GenderNotFoundException("Gender " + genderString + " doesn't exist"));
 
         return new GenderModel(gender);
@@ -45,6 +45,6 @@ public class GenderServiceImpl implements GenderService {
     }
 
     public boolean existsGender(GenderModel genderModel) {
-        return this.genderRepository.existsByGender(genderModel.getGenderEnum().toString().toLowerCase());
+        return this.genderRepository.existsByGenderName(genderModel.getGenderEnum().toString().toLowerCase());
     }
 }

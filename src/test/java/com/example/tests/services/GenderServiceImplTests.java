@@ -23,7 +23,7 @@ public class GenderServiceImplTests extends BaseTestClass {
 
     @Test
     public void whenGenderAlreadyExistsReturnsTrue() {
-        Mockito.when(genderRepository.existsByGender(Mockito.anyString())).thenReturn(true);
+        Mockito.when(genderRepository.existsByGenderName(Mockito.anyString())).thenReturn(true);
 
         for (GenderModel genderModel : genderModelList) {
             assertTrue(this.genderService.existsGender(genderModel),
@@ -33,7 +33,7 @@ public class GenderServiceImplTests extends BaseTestClass {
 
     @Test
     public void whenGenderDoesntExistReturnsFalse() {
-        Mockito.when(genderRepository.existsByGender(Mockito.anyString())).thenReturn(false);
+        Mockito.when(genderRepository.existsByGenderName(Mockito.anyString())).thenReturn(false);
 
         for (GenderModel genderModel : genderModelList) {
             assertFalse(this.genderService.existsGender(genderModel),
@@ -55,7 +55,7 @@ public class GenderServiceImplTests extends BaseTestClass {
 
     @Test
     public void whenGenderIsNotContainedByGenderNameThrowsException() {
-            Mockito.when(genderRepository.findByGender(Mockito.anyString()))
+            Mockito.when(genderRepository.findByGenderName(Mockito.anyString()))
                     .thenThrow(GenderNotFoundException.class);
 
             assertThrows(GenderNotFoundException.class,
@@ -67,7 +67,7 @@ public class GenderServiceImplTests extends BaseTestClass {
         for (int i = 0; i < genderList.size(); ++i) {
             Optional<Gender> optionalGender = Optional.of(genderList.get(i));
 
-            Mockito.when(genderRepository.findByGender(Mockito.anyString())).thenReturn(optionalGender);
+            Mockito.when(genderRepository.findByGenderName(Mockito.anyString())).thenReturn(optionalGender);
 
             assertEquals(this.genderService
                             .findGenderByGender(genderList.get(i).getGenderName()), genderModelList.get(i),
