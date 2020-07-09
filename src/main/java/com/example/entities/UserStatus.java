@@ -5,26 +5,28 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "UserStatistics")
+@Table
 public class UserStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long userStatusUpdateId;
 
-    @NonNull
-    @Column(name = "UpdateTime")
+    @Column
     long updateTime;
 
-    @NonNull
-    @Column(name = "UserId")
+    @Column
     int userId;
 
-    @NonNull
-    @Column(name = "StatusId")
+    @Column
     int statusId;
+
+    public UserStatus(long updateTime, int userId, int statusId) {
+        this.updateTime = updateTime;
+        this.userId = userId;
+        this.statusId = statusId;
+    }
 }

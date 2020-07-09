@@ -16,7 +16,7 @@ public class GenderController {
         this.genderService = genderService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/addGender")
     public GenderDTO addGender(@RequestBody GenderDTO genderDTO)
             throws GenderAlreadyExistsException {
         GenderModel newGenderModel = new GenderModel(genderDTO);

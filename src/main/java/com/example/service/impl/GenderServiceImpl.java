@@ -25,6 +25,7 @@ public class GenderServiceImpl implements GenderService {
 
         Gender newGender = new Gender(genderModel);
         newGender = this.genderRepository.save(newGender);
+
         return new GenderModel(newGender);
     }
 

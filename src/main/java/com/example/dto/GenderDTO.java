@@ -1,20 +1,20 @@
 package com.example.dto;
 
 import com.example.model.GenderModel;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class GenderDTO {
     private int genderId;
 
-    @NonNull
     private String genderName;
 
+    public GenderDTO(String genderName) {
+        this.genderName = genderName;
+    }
+
     public GenderDTO(GenderModel genderModel) {
-        this(genderModel.getGenderEnum().toString().toLowerCase());
-        this.genderId = genderModel.getGenderId();
+        this(genderModel.getGenderId(), genderModel.getGenderEnum().toString().toLowerCase());
     }
 }

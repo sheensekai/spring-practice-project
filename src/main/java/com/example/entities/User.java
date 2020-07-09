@@ -8,40 +8,37 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
-@Table(name = "SystemUsers")
+@Table(name = "system_users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @NonNull
-    @Column(name = "Username", unique = true)
+    @Column(unique = true)
     private String userName;
 
-    @NonNull
-    @Column(name = "Email", unique = true)
+    @Column(unique = true)
     private String email;
 
-    @NonNull
-    @Column(name = "PasswordHash")
+    @Column
     private long passwordHash;
 
-    @Column(name = "OnlineStatusId")
+    @Column
     private int statusId;
 
-    @Column(name = "OnlineStatusUpdateTime")
-    private long updatetime;
+    @Column
+    private long updateTime;
 
     public User(UserModel user) {
-        this(user.getUserName(), user.getEmail(), user.getPasswordHash());
+        this(user.getUserId(), user.getUserName(), user.getEmail(),
+                user.getPasswordHash(), user.getStatusId(), user.getUpdateTime());
     }
 
     public void updateStatus(UserStatus newUserStatus) {
         this.statusId = newUserStatus.statusId;
-        this.updatetime = newUserStatus.updateTime;
+        this.updateTime = newUserStatus.updateTime;
     }
 
 }

@@ -17,7 +17,7 @@ public class UserTests {
 
             assertEquals(user.getStatusId(), userStatus.getStatusId(),
                     "After updating status of user, user.getStatus() has incorrect value");
-            assertEquals(user.getUpdatetime(), userStatus.getUpdateTime(),
+            assertEquals(user.getUpdateTime(), userStatus.getUpdateTime(),
                     "After updating status of user, user.getUpdatetime() has incorrect value");
         }
     }

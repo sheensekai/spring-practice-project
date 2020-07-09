@@ -26,13 +26,14 @@ public class UserController {
         this.userStatusService = userStatusService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/addUser")
     public UserDTO addUser(@RequestBody UserDTO userDTO)
         throws UserAlreadyExistsException {
         UserModel newUserModel = new UserModel(userDTO);
         newUserModel = this.userService.addUser(newUserModel);
 
-        this.userStatusService.updateUserStatus(userDTO.getUserId(), UserStatusEnum.ONLINE);
+        this.userStatusService.updateUserStatus(newUserModel.getUserId(), UserStatusEnum.ONLINE);
+        newUserModel = this.userService.getUserByUserId(newUserModel.getUserId());
         return new UserDTO(newUserModel);
     }
 
@@ -50,7 +51,7 @@ public class UserController {
         return new UserStatusDTO(updatedUserStatusModel);
     }
 
-    @GetMapping("/addUser")
+    @GetMapping("/getUser")
     public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
         throws UserNotFoundException {
         UserModel foundUserModel = this.userService.getUserByUserId(userId);

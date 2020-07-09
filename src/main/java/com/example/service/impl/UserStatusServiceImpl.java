@@ -41,6 +41,9 @@ public class UserStatusServiceImpl implements UserStatusService {
         }
 
         UserStatus userStatus = this.updateUserStatusStatisticsImpl(userId, onlineStatus);
+        if (userStatus.getUserId() == 0) {
+            throw new RuntimeException("Something went wrong");
+        }
         this.updateUserStatusImpl(userId, userStatus);
 
         return new UserStatusModel(userStatus, onlineStatus);
@@ -48,6 +51,9 @@ public class UserStatusServiceImpl implements UserStatusService {
 
     private void updateUserStatusImpl(int userId, UserStatus newStatus) {
         UserModel userModel = this.userService.getUserByUserId(userId);
+        if (userModel.getUserId() == 0) {
+            throw new RuntimeException("Somethign went wrong");
+        }
         User user = new User(userModel);
         user.updateStatus(newStatus);
         this.userService.updateUser(new UserModel(user));

@@ -45,11 +45,14 @@ public class UserControllerTests {
 
         userModel.setUserId(7);
         userModel.setStatusId(7);
-        userModel.setUpdatetime(7L);
-        UserDTO toCompare = new UserDTO(userModel);
+        userModel.setUpdateTime(7L);
+
+        UserModel userModel1 = userModel;
+        userModel1.setPasswordHash(-1);
+        UserDTO toCompare = new UserDTO(userModel1);
 
         Mockito.when(userService.addUser(Mockito.any())).thenReturn(userModel);
-
+        Mockito.when(userService.getUserByUserId(Mockito.anyInt())).thenReturn(userModel1);
         assertEquals(userController.addUser(userDTO), toCompare);
     }
 

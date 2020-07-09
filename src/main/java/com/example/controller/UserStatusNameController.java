@@ -19,7 +19,7 @@ public class UserStatusNameController {
         this.userStatusNameService = userStatusNameService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/addUserStatusName")
     public UserStatusNameDTO addUserStatusName(@RequestBody UserStatusNameDTO userStatusNameDTO)
         throws UserStatusNameAlreadyExistsException {
         UserStatusNameModel userStatusNameModel = new UserStatusNameModel(userStatusNameDTO);

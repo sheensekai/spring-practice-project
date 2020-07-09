@@ -23,7 +23,7 @@ public class UserInfoController {
         this.userService = userService;
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/addUserInfo/{userId}")
     public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, @RequestBody UserInfoDTO userInfoDTO)
         throws UserNotFoundException, UserInfoAlreadyExistsException {
         UserInfoModel newUserInfoModel = new UserInfoModel(userInfoDTO);
@@ -37,7 +37,7 @@ public class UserInfoController {
         return new UserInfoDTO(newUserInfoModel);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/updateUserInfo/{userId}")
     public UserInfoDTO updateUserInfo(@PathVariable(name = "userId") Integer userId, @RequestBody UserInfoDTO userInfoDTO)
         throws UserNotFoundException, UserInfoNotFoundException {
         UserInfoModel updatedUserInfoModel = new UserInfoModel(userInfoDTO);
@@ -51,7 +51,7 @@ public class UserInfoController {
         return new UserInfoDTO(updatedUserInfoModel);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/getUserInfo/{userId}")
     public UserInfoDTO getUserInfo(@PathVariable(name = "userId") Integer userId)
         throws UserNotFoundException, UserInfoNotFoundException {
 

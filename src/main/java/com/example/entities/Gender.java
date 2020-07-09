@@ -8,20 +8,18 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
-@Table(name = "Genders")
+@Table
 public class Gender {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int genderId;
 
-    @NonNull
-    @Column(name = "GenderName", unique = true)
+    @Column(unique = true)
     private String genderName;
 
     public Gender(GenderModel genderModel) {
-        this(genderModel.getGenderEnum().toString().toLowerCase());
+        this(genderModel.getGenderId(), genderModel.getGenderEnum().toString().toLowerCase());
     }
 }
