@@ -9,5 +9,5 @@ import java.util.List;
 @Service
 public interface UserStatusService {
     UserStatusModel updateUserStatus(int userId, UserStatusEnum onlineStatus);
-    List<UserStatusModel> getStatistics(Integer userId, UserStatusEnum onlineSTatus, Long updateTime);
+    List<UserStatusModel> getStatistics(Integer userId, UserStatusEnum onlineStatus, Long updateTime);
 }

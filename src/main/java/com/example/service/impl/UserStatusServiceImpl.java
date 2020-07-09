@@ -117,7 +117,7 @@ public class UserStatusServiceImpl implements UserStatusService {
         for (UserStatusNameModel userStatusNameModel : allStatusNames) {
             UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(userStatusNameModel.getStatusName());
             if (userStatusEnum == null) {
-                throw new ResourceNotFoundException("Enum for " + allStatusNames + " doesn't exist");
+                throw new ResourceNotFoundException("Enum for " + userStatusNameModel.getStatusName() + " doesn't exist");
             }
 
             idToName.put(userStatusNameModel.getStatusId(), userStatusEnum);

@@ -25,10 +25,20 @@ public class UserStatusController {
 
     @GetMapping("/statistics")
     public List<UserStatusDTO> getStatistics
-            (@RequestParam(name = "userId", defaultValue = "null") Integer userId,
-             @RequestParam(name = "onlineStatus", defaultValue = "null") String onlineStatus,
-             @RequestParam(name = "updateTime", defaultValue = "0") Long updateTime)
+            (@RequestParam(value = "userId", defaultValue = "null") String userIdString,
+             @RequestParam(value = "onlineStatus", defaultValue = "null") String onlineStatus,
+             @RequestParam(value = "updateTime", defaultValue = "0") String updateTimeString)
         throws ResourceNotFoundException {
+
+        Integer userId = null;
+        if (!userIdString.equals("null")) {
+            userId = Integer.parseInt(userIdString);
+        }
+
+        Long updateTime = null;
+        if (!updateTimeString.equals("null")) {
+            updateTime = Long.parseLong(updateTimeString);
+        }
 
         UserStatusEnum onlineStatusEnum = UserStatusEnum.findEnum(onlineStatus);
         List<UserStatusModel> userStatusModelList =
