@@ -25,9 +25,9 @@ public class UserStatusController {
 
     @GetMapping("/statistics")
     public List<UserStatusDTO> getStatistics
-            (@RequestParam(value = "userId", defaultValue = "null") String userIdString,
-             @RequestParam(value = "onlineStatus", defaultValue = "null") String onlineStatus,
-             @RequestParam(value = "updateTime", defaultValue = "0") String updateTimeString)
+            (@RequestParam(value = "userId", defaultValue = "null", required = false) String userIdString,
+             @RequestParam(value = "onlineStatus", defaultValue = "null", required = false) String onlineStatus,
+             @RequestParam(value = "updateTime", defaultValue = "0", required = false) String updateTimeString)
         throws ResourceNotFoundException {
 
         Integer userId = null;

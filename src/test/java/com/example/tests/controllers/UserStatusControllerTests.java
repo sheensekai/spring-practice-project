@@ -34,6 +34,6 @@ public class UserStatusControllerTests {
         Mockito.when(userStatusService.getStatistics(null, null, null))
                 .thenReturn(Arrays.asList(userStatusModel));
 
-        assertEquals(userStatusController.getStatistics(null, null, null), toCompare);
+        assertEquals(userStatusController.getStatistics("null", "null", "null"), toCompare);
     }
 }
