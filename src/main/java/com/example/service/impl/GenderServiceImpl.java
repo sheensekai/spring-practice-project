@@ -1,8 +1,8 @@
 package com.example.service.impl;
 
 import com.example.entities.Gender;
-import com.example.exception.ResourceAlreadyExistsException;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.exists.ResourceAlreadyExistsException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.GenderModel;
 import com.example.repository.GenderRepository;
 import com.example.service.GenderService;

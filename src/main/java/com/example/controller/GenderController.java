@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.GenderDTO;
-import com.example.exception.ResourceAlreadyExistsException;
+import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.model.GenderModel;
 import com.example.service.GenderService;
 import org.springframework.beans.factory.annotation.Autowired;

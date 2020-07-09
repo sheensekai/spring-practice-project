@@ -1,7 +1,7 @@
 package com.example.tests.services;
 
 import com.example.entities.UserStatusName;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusNameRepository;
 import com.example.service.impl.UserStatusNameServiceImpl;

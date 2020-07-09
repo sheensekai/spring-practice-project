@@ -3,7 +3,7 @@ package com.example.tests.controllers;
 import com.example.GenderEnum;
 import com.example.controller.GenderController;
 import com.example.dto.GenderDTO;
-import com.example.exception.ResourceAlreadyExistsException;
+import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.model.GenderModel;
 import com.example.service.impl.GenderServiceImpl;
 import org.junit.jupiter.api.BeforeAll;

@@ -3,7 +3,7 @@ package com.example.tests.services;
 import com.example.UserStatusEnum;
 import com.example.entities.UserStatus;
 import com.example.entities.UserStatusName;
-import com.example.exception.ResourceNotFoundException;
+import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusRepository;
