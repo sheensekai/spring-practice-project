@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.UserStatusEnum;
 import com.example.dto.UserDTO;
 import com.example.dto.UserStatusDTO;
+import com.example.exception.notfound.StatusEnumDoesntExist;
 import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.UserModel;
@@ -42,7 +43,7 @@ public class UserController {
         throws ResourceNotFoundException {
         UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(newStatus);
         if (userStatusEnum == null) {
-            throw new ResourceNotFoundException("Enum for " + newStatus + " doesn't exist");
+            throw new StatusEnumDoesntExist("Enum for " + newStatus + " doesn't exist");
         }
 
         UserStatusModel updatedUserStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
