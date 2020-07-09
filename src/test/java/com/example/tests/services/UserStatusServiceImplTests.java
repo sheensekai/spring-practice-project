@@ -3,7 +3,7 @@ package com.example.tests.services;
 import com.example.UserStatusEnum;
 import com.example.entities.UserStatus;
 import com.example.entities.UserStatusName;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusRepository;
@@ -33,16 +33,10 @@ public class UserStatusServiceImplTests extends BaseTestClass {
 
     @Test
     public void whenAllArgsNotPassedGetStatisticsReturnsAllUserStatuses() {
-        Mockito.when(userStatusRepository
-                .findByUpdateTimeGreaterThan(Mockito.anyLong()))
-                .thenReturn(userStatusList);
+        Mockito.when(userStatusRepository.findByUpdateTimeGreaterThan(Mockito.anyLong())).thenReturn(userStatusList);
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.getStatistics(null, null, null),
-                userStatusModelList);
+        assertEquals(userStatusService.getStatistics(null, null, null), userStatusModelList);
     }
 
     @Test
@@ -50,36 +44,27 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         UserStatus userStatus = userStatusList.get(0);
         UserStatusModel userStatusModel = userStatusModelList.get(0);
         UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(0);
+
         Mockito.when(userStatusRepository
                 .findByUserIdEqualsAndStatusIdEqualsAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyLong()))
                 .thenReturn(Arrays.asList(userStatus));
-
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
         Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
                 .thenReturn(userStatusNameModelList.get(0));
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.getStatistics(
-                        userStatus.getUserId(),
-                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()),
-                        userStatus.getUpdateTime()),
+        assertEquals(userStatusService.getStatistics(userStatus.getUserId(),
+                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()), userStatus.getUpdateTime()),
                 Arrays.asList(userStatusModel));
     }
 
     @Test
     public void whenUserIdOnlyPassedReturnsSuitableStatuses() {
         for (int i = 0; i < userStatusModelList.size(); ++i) {
-            Mockito.when(userStatusRepository
-                    .findByUserIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
+            Mockito.when(userStatusRepository.findByUserIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
                     .thenReturn(new ArrayList<>(Arrays.asList(userStatusList.get(0))));
             Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
-            userStatusService = new UserStatusServiceImpl
-                    (userStatusRepository, userStatusNameService, userService);
 
-            assertEquals(
-                    userStatusService.getStatistics(i, null, null),
+            assertEquals(userStatusService.getStatistics(i, null, null),
                     new ArrayList<>(Arrays.asList(userStatusModelList.get(0))));
         }
     }
@@ -89,6 +74,7 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         for (int i = 0; i < 3; ++i) {
             UserStatusName userStatusName = userStatusNameList.get(i);
             UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(i);
+
             List<UserStatus> toCompare = new ArrayList<>();
             for (UserStatus userStatus : userStatusList) {
                 if (userStatus.getStatusId() == userStatusName.getStatusId()) {
@@ -101,17 +87,14 @@ public class UserStatusServiceImplTests extends BaseTestClass {
                 toCompareModel.add(new UserStatusModel(userStatus, UserStatusEnum.findEnum(userStatusName.getStatusName())));
             }
 
-            Mockito.when(userStatusRepository
-                    .findByStatusIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
+            Mockito.when(userStatusRepository.findByStatusIdAndUpdateTimeGreaterThan(
+                            Mockito.anyInt(), Mockito.anyLong()))
                     .thenReturn(toCompare);
             Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
             Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString())).thenReturn(userStatusNameModel);
-            userStatusService = new UserStatusServiceImpl
-                    (userStatusRepository, userStatusNameService, userService);
 
-            assertEquals(
-                    userStatusService.getStatistics(
-                            null, UserStatusEnum.findEnum(userStatusName.getStatusName()), null),
+            assertEquals(userStatusService.getStatistics(null,
+                            UserStatusEnum.findEnum(userStatusName.getStatusName()), null),
                     toCompareModel);
         }
     }
@@ -121,13 +104,10 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         UserStatus userStatus = userStatusList.get(1);
         UserStatusModel userStatusModel = userStatusModelList.get(1);
 
-        Mockito.when(userStatusRepository
-                .findByUpdateTimeGreaterThan(userStatusModel.getUpdateTime()))
+        Mockito.when(userStatusRepository.findByUpdateTimeGreaterThan(userStatusModel.getUpdateTime()))
                 .thenReturn(Arrays.asList(userStatus));
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
         Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString())).thenReturn(userStatusNameModelList.get(0));
-        userStatusService = new UserStatusServiceImpl(
-                userStatusRepository, userStatusNameService, userService);
 
         assertEquals(userStatusService.getStatistics(null, null, userStatusModel.getUpdateTime()),
                 Arrays.asList(userStatusModel));
@@ -138,21 +118,16 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         UserStatus userStatus = userStatusList.get(1);
         UserStatusModel userStatusModel = userStatusModelList.get(1);
         UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(0);
-        Mockito.when(userStatusRepository
-                .findByUserIdEqualsAndStatusIdEqualsAndUpdateTimeGreaterThan(
+
+        Mockito.when(userStatusRepository.findByUserIdEqualsAndStatusIdEqualsAndUpdateTimeGreaterThan(
                         Mockito.anyInt(), Mockito.anyInt(), Mockito.anyLong()))
                 .thenReturn(Arrays.asList(userStatus));
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
         Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
                 .thenReturn(userStatusNameModelList.get(0));
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.getStatistics(
-                        userStatus.getUserId(),
-                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()),
-                        null),
+        assertEquals(userStatusService.getStatistics(userStatus.getUserId(),
+                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()), null),
                 Arrays.asList(userStatusModel));
     }
 
@@ -160,20 +135,14 @@ public class UserStatusServiceImplTests extends BaseTestClass {
     public void whenUserIdAndUpdateTimeArePassedReturnsSuitableStatuses() {
         UserStatus userStatus = userStatusList.get(1);
         UserStatusModel userStatusModel = userStatusModelList.get(1);
-        Mockito.when(userStatusRepository
-                .findByUserIdAndUpdateTimeGreaterThan(
-                        Mockito.anyInt(), Mockito.anyLong()))
+
+        Mockito.when(userStatusRepository.findByUserIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
                 .thenReturn(Arrays.asList(userStatus));
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
         Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
                 .thenReturn(userStatusNameModelList.get(0));
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.getStatistics(
-                        userStatus.getUserId(),
-                        null,
+        assertEquals(userStatusService.getStatistics(userStatus.getUserId(), null,
                         userStatus.getUpdateTime()),
                 Arrays.asList(userStatusModel));
     }
@@ -183,33 +152,25 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         UserStatus userStatus = userStatusList.get(1);
         UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(0);
         UserStatusModel userStatusModel = userStatusModelList.get(1);
-        Mockito.when(userStatusRepository
-                .findByStatusIdAndUpdateTimeGreaterThan(
-                        Mockito.anyInt(), Mockito.anyLong()))
+
+        Mockito.when(userStatusRepository.findByStatusIdAndUpdateTimeGreaterThan(Mockito.anyInt(), Mockito.anyLong()))
                 .thenReturn(Arrays.asList(userStatus));
         Mockito.when(userStatusNameService.getAllStatuses()).thenReturn(userStatusNameModelList);
         Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
                 .thenReturn(userStatusNameModelList.get(0));
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.getStatistics(
-                        null,
-                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()),
-                        userStatus.getUpdateTime()),
+        assertEquals(userStatusService.getStatistics(null,
+                        UserStatusEnum.findEnum(userStatusNameModel.getStatusName()), userStatus.getUpdateTime()),
                 Arrays.asList(userStatusModel));
     }
 
     @Test
     public void whenUserIsNotContainedUpdateUserStatusThrowsException() {
         UserStatusModel userStatusModel = userStatusModelList.get(0);
-        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(false);
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertThrows(ResourceNotFoundException.class, ()
-                -> userStatusService.updateUserStatus(
+        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(false);
+
+        assertThrows(UserNotFoundException.class, () -> userStatusService.updateUserStatus(
                 userStatusModel.getUserId(),
                 userStatusModel.getOnlineStatus()));
     }
@@ -219,20 +180,13 @@ public class UserStatusServiceImplTests extends BaseTestClass {
         UserStatusModel userStatusModel = userStatusModelList.get(0);
         UserStatus userStatus = userStatusList.get(0);
         UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(0);
-        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(true);
-        Mockito.when(userService.getUserByUserId(Mockito.anyInt()))
-                .thenReturn(userModelList.get(0));
-        Mockito.when(userStatusRepository.save(Mockito.any()))
-                .thenReturn(userStatus);
-        Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString()))
-                .thenReturn(userStatusNameModel);
-        userStatusService = new UserStatusServiceImpl
-                (userStatusRepository, userStatusNameService, userService);
 
-        assertEquals(
-                userStatusService.updateUserStatus(
-                        userStatusModel.getUserId(),
-                        userStatusModel.getOnlineStatus()),
+        Mockito.when(userService.existsByUserId(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(userService.getUserByUserId(Mockito.anyInt())).thenReturn(userModelList.get(0));
+        Mockito.when(userStatusRepository.save(Mockito.any())).thenReturn(userStatus);
+        Mockito.when(userStatusNameService.getStatusByStatusName(Mockito.anyString())).thenReturn(userStatusNameModel);
+
+        assertEquals(userStatusService.updateUserStatus(userStatusModel.getUserId(), userStatusModel.getOnlineStatus()),
                 userStatusModel);
     }
 
