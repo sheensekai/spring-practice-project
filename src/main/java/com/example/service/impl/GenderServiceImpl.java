@@ -1,8 +1,8 @@
 package com.example.service.impl;
 
 import com.example.entities.Gender;
-import com.example.exception.exists.ResourceAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.exists.GenderAlreadyExistsException;
+import com.example.exception.notfound.GenderNotFoundException;
 import com.example.model.GenderModel;
 import com.example.repository.GenderRepository;
 import com.example.service.GenderService;
@@ -17,9 +17,10 @@ public class GenderServiceImpl implements GenderService {
         this.genderRepository = genderRepository;
     }
 
-    public GenderModel addGender(GenderModel genderModel) {
+    public GenderModel addGender(GenderModel genderModel)
+        throws GenderAlreadyExistsException {
         if (this.existsGender(genderModel)) {
-            throw new ResourceAlreadyExistsException("Gender " + genderModel.getGenderEnum().toString() + " already exists");
+            throw new GenderAlreadyExistsException("Gender " + genderModel.getGenderEnum().toString() + " already exists");
         }
 
         Gender newGender = new Gender(genderModel);
@@ -27,16 +28,18 @@ public class GenderServiceImpl implements GenderService {
         return new GenderModel(newGender);
     }
 
-    public GenderModel findGenderByGender(String genderString) {
+    public GenderModel findGenderByGender(String genderString)
+        throws GenderNotFoundException {
         Gender gender = this.genderRepository.findByGender(genderString)
-                .orElseThrow(() -> new ResourceNotFoundException("Gender " + genderString + " doesn't exist"));
+                .orElseThrow(() -> new GenderNotFoundException("Gender " + genderString + " doesn't exist"));
 
         return new GenderModel(gender);
     }
 
-    public GenderModel findGenderByGenderId(int genderId) {
+    public GenderModel findGenderByGenderId(int genderId)
+        throws  GenderNotFoundException {
         Gender gender = this.genderRepository.findById(genderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Gender with id " + genderId + " doesn't exist"));
+                .orElseThrow(() -> new GenderNotFoundException("Gender with id " + genderId + " doesn't exist"));
 
         return new GenderModel(gender);
     }

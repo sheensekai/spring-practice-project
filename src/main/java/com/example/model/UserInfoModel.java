@@ -3,7 +3,7 @@ package com.example.model;
 import com.example.GenderEnum;
 import com.example.dto.UserInfoDTO;
 import com.example.entities.UserInfo;
-import com.example.exception.GenderEnumDoesntExistException;
+import com.example.exception.notfound.GenderEnumDoesntExistException;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -30,12 +30,10 @@ public class UserStatusControllerTests {
         UserStatusModel userStatusModel = new UserStatusModel(1L, 2, UserStatusEnum.ONLINE, 50L);
         List<UserStatusDTO> toCompare = new ArrayList<>();
         toCompare.add(new UserStatusDTO(userStatusModel));
+
         Mockito.when(userStatusService.getStatistics(null, null, null))
                 .thenReturn(Arrays.asList(userStatusModel));
 
-        assertEquals(
-                userStatusController.getStatistics(
-                        null, null, null),
-                toCompare);
+        assertEquals(userStatusController.getStatistics(null, null, null), toCompare);
     }
 }

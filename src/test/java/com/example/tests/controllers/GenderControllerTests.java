@@ -3,6 +3,7 @@ package com.example.tests.controllers;
 import com.example.GenderEnum;
 import com.example.controller.GenderController;
 import com.example.dto.GenderDTO;
+import com.example.exception.exists.GenderAlreadyExistsException;
 import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.model.GenderModel;
 import com.example.service.impl.GenderServiceImpl;
@@ -26,8 +27,9 @@ public class GenderControllerTests {
     @Test
     public void whenGenderIsContainedAddGenderThrowsException() {
         GenderDTO genderDTO = new GenderDTO(GenderEnum.MALE.toString().toLowerCase());
+
         Mockito.when(genderService.addGender(Mockito.any()))
-                .thenThrow(ResourceAlreadyExistsException.class);
+                .thenThrow(GenderAlreadyExistsException.class);
 
         assertThrows(ResourceAlreadyExistsException.class,
                 () -> genderController.addGender(genderDTO));
@@ -37,6 +39,7 @@ public class GenderControllerTests {
     public void whenGenderIsNotContainedAddGenderReturnsAddedGender() {
         GenderDTO genderDTO = new GenderDTO(GenderEnum.MALE.toString().toLowerCase());
         GenderModel genderModel = new GenderModel(genderDTO);
+
         Mockito.when(genderService.addGender(Mockito.any()))
                 .thenReturn(genderModel);
 

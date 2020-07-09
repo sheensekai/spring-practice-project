@@ -1,7 +1,7 @@
 package com.example.tests.services;
 
 import com.example.entities.UserStatusName;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserStatusNameNotFoundException;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusNameRepository;
 import com.example.service.impl.UserStatusNameServiceImpl;
@@ -24,7 +24,6 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
     public void whenUserStatusNameIsContainedExistsByStatusIdReturnsTrue() {
         for (int i = 0; i < userStatusNameList.size(); ++i) {
             Mockito.when(userStatusNameRepository.existsById(i)).thenReturn(true);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
 
             assertTrue(userStatusNameService.existsByStatusId(i));
         }
@@ -34,7 +33,6 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
     public void whenUserStatusNameIsNotContainedExistsByStatusIdReturnsFalse() {
         for (int i = 0; i < userStatusNameList.size(); ++i) {
             Mockito.when(userStatusNameRepository.existsById(i)).thenReturn(false);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
 
             assertFalse(userStatusNameService.existsByStatusId(i));
         }
@@ -47,26 +45,21 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
             UserStatusNameModel userStatusNameModel = userStatusNameModelList.get(i);
             Optional<UserStatusName> optionalUserStatusName = Optional.of(userStatusName);
 
-            Mockito.when(userStatusNameRepository.findByStatusName(userStatusName
-                    .getStatusName())).thenReturn(optionalUserStatusName);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
+            Mockito.when(userStatusNameRepository.findByStatusName(userStatusName.getStatusName()))
+                    .thenReturn(optionalUserStatusName);
 
-            assertEquals(
-                    userStatusNameService.getStatusByStatusName(userStatusName.getStatusName()),
-                    userStatusNameModel);
+            assertEquals(userStatusNameService
+                    .getStatusByStatusName(userStatusName.getStatusName()), userStatusNameModel);
         }
     }
 
     @Test
     public void whenStatusNameIsNotContainedGetStatusByStatusNameThrowsException() {
-        for (int i = 0; i < userStatusNameList.size(); ++i) {
-            UserStatusName userStatusName = userStatusNameList.get(i);
+        for (UserStatusName userStatusName : userStatusNameList) {
             Mockito.when(userStatusNameRepository.findByStatusName(userStatusName
-                    .getStatusName())).thenThrow(ResourceNotFoundException.class);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
+                    .getStatusName())).thenThrow(UserStatusNameNotFoundException.class);
 
-            assertThrows(
-                    ResourceNotFoundException.class,
+            assertThrows(UserStatusNameNotFoundException.class,
                     () -> userStatusNameService.getStatusByStatusName(userStatusName.getStatusName()));
         }
     }
@@ -79,24 +72,18 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
             Optional<UserStatusName> optionalUserStatusName = Optional.of(userStatusName);
 
             Mockito.when(userStatusNameRepository.findById(userStatusName.getStatusId())).thenReturn(optionalUserStatusName);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
 
-            assertEquals(
-                    userStatusNameService.getStatusByStatusId(userStatusName.getStatusId()),
-                    userStatusNameModel);
+            assertEquals(userStatusNameService.getStatusByStatusId(userStatusName.getStatusId()), userStatusNameModel);
         }
     }
 
     @Test
     public void whenStatusNameIsNotContainedGetStatusByStatusIdThrowsException() {
-        for (int i = 0; i < userStatusNameList.size(); ++i) {
-            UserStatusName userStatusName = userStatusNameList.get(i);
+        for (UserStatusName userStatusName : userStatusNameList) {
             Mockito.when(userStatusNameRepository.findById(userStatusName
-                    .getStatusId())).thenThrow(ResourceNotFoundException.class);
-            userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
+                    .getStatusId())).thenThrow(UserStatusNameNotFoundException.class);
 
-            assertThrows(
-                    ResourceNotFoundException.class,
+            assertThrows(UserStatusNameNotFoundException.class,
                     () -> userStatusNameService.getStatusByStatusId(userStatusName.getStatusId()));
         }
     }
@@ -104,10 +91,7 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
     @Test
     public void getAllStatusesReturnsAllTheStatuses() {
         Mockito.when(userStatusNameRepository.findAll()).thenReturn(userStatusNameList);
-        userStatusNameService = new UserStatusNameServiceImpl(userStatusNameRepository);
 
-        assertEquals(
-                userStatusNameModelList,
-                userStatusNameService.getAllStatuses());
+        assertEquals(userStatusNameModelList, userStatusNameService.getAllStatuses());
     }
 }

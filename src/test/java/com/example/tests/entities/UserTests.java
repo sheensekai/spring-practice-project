@@ -14,6 +14,7 @@ public class UserTests {
         for (int statusId = 1; statusId <= 10; ++statusId) {
             UserStatus userStatus = new UserStatus(System.currentTimeMillis(), user.getUserId(), statusId);
             user.updateStatus(userStatus);
+
             assertEquals(user.getStatusId(), userStatus.getStatusId(),
                     "After updating status of user, user.getStatus() has incorrect value");
             assertEquals(user.getUpdatetime(), userStatus.getUpdateTime(),

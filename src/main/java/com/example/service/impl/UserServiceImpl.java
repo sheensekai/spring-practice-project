@@ -1,8 +1,8 @@
 package com.example.service.impl;
 
 import com.example.entities.User;
-import com.example.exception.exists.ResourceAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.exists.UserAlreadyExistsException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
 import com.example.service.UserService;
@@ -17,12 +17,13 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    public UserModel addUser(UserModel userModel) {
+    public UserModel addUser(UserModel userModel)
+        throws UserAlreadyExistsException {
         if (this.containsByUserName(userModel.getUserName())) {
-            throw new ResourceAlreadyExistsException("User with username " + userModel.getUserName() + " already exists");
+            throw new UserAlreadyExistsException("User with username " + userModel.getUserName() + " already exists");
         }
         if (this.containsByEmail(userModel.getEmail())) {
-            throw new ResourceAlreadyExistsException("User with email " + userModel.getEmail() + " already exists");
+            throw new UserAlreadyExistsException("User with email " + userModel.getEmail() + " already exists");
         }
 
         User newUser = new User(userModel);
@@ -30,9 +31,10 @@ public class UserServiceImpl implements UserService {
         return new UserModel(newUser);
     }
 
-    public UserModel updateUser(UserModel userModel) {
+    public UserModel updateUser(UserModel userModel)
+        throws UserNotFoundException {
         if (!this.userRepository.existsById(userModel.getUserId())) {
-            throw new ResourceNotFoundException("User with id " + userModel.getUserId() + " doesn't exist");
+            throw new UserNotFoundException("User with id " + userModel.getUserId() + " doesn't exist");
         }
 
         User newUser = new User(userModel);
@@ -40,9 +42,10 @@ public class UserServiceImpl implements UserService {
         return new UserModel(newUser);
     }
 
-    public UserModel getUserByUserId(int userId) {
+    public UserModel getUserByUserId(int userId)
+        throws UserNotFoundException {
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id" + userId));
+                .orElseThrow(() -> new UserNotFoundException("Couldn't find user with id" + userId));
         return new UserModel(user);
     }
 

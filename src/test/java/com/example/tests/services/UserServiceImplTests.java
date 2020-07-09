@@ -1,8 +1,8 @@
 package com.example.tests.services;
 
 import com.example.entities.User;
-import com.example.exception.exists.ResourceAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.exists.UserAlreadyExistsException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;
 import com.example.service.impl.UserServiceImpl;
@@ -25,7 +25,6 @@ public class UserServiceImplTests extends BaseTestClass {
         for (int i = 0; i < userList.size(); ++i) {
             Mockito.when(userRepository.existsById(i)).thenReturn(true);
 
-            userService = new UserServiceImpl(userRepository);
             assertTrue(userService.existsByUserId(i));
         }
     }
@@ -34,7 +33,6 @@ public class UserServiceImplTests extends BaseTestClass {
     public void whenUserIsNotContainedExistsByUserIdReturnsFalse() {
         for (int i = 0; i < userList.size(); ++i) {
             Mockito.when(userRepository.existsById(i)).thenReturn(false);
-            userService = new UserServiceImpl(userRepository);
 
             assertFalse(userService.existsByUserId(i));
         }
@@ -44,7 +42,6 @@ public class UserServiceImplTests extends BaseTestClass {
     public void whenUserIsContainedContainsByUserNameReturnsTrue() {
         for (String userName : rightNameList) {
             Mockito.when(userRepository.existsByUserName(userName)).thenReturn(true);
-            userService = new UserServiceImpl(userRepository);
 
             assertTrue(userService.containsByUserName(userName));
         }
@@ -54,7 +51,6 @@ public class UserServiceImplTests extends BaseTestClass {
     public void whenUserIsNotContainedContainsByUserNameReturnsFalse() {
         for (String userName : rightNameList) {
             Mockito.when(userRepository.existsByUserName(userName)).thenReturn(false);
-            userService = new UserServiceImpl(userRepository);
 
             assertFalse(userService.containsByUserName(userName));
         }
@@ -64,7 +60,6 @@ public class UserServiceImplTests extends BaseTestClass {
     public void whenUserIsContainedContainsByEmailReturnsTrue() {
         for (String email : rightNameList) {
             Mockito.when(userRepository.existsByEmail(email)).thenReturn(true);
-            userService = new UserServiceImpl(userRepository);
 
             assertTrue(userService.containsByEmail(email));
         }
@@ -74,7 +69,6 @@ public class UserServiceImplTests extends BaseTestClass {
     public void whenUserIsNotContainedContainsByEmailReturnsFalse() {
         for (String email : rightNameList) {
             Mockito.when(userRepository.existsByEmail(email)).thenReturn(false);
-            userService = new UserServiceImpl(userRepository);
 
             assertFalse(userService.containsByEmail(email));
         }
@@ -82,12 +76,9 @@ public class UserServiceImplTests extends BaseTestClass {
 
     @Test
     public void whenUserIsNotContainedUpdateUserThrowsException() {
-        Mockito.when(userRepository.existsById(Mockito.anyInt())).
-                thenThrow(ResourceNotFoundException.class);
-        userService = new UserServiceImpl(userRepository);
+        Mockito.when(userRepository.existsById(Mockito.anyInt())).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> userService.updateUser(userModelList.get(0)));
+        assertThrows(UserNotFoundException.class, () -> userService.updateUser(userModelList.get(0)));
     }
 
     @Test
@@ -98,34 +89,33 @@ public class UserServiceImplTests extends BaseTestClass {
 
             Mockito.when(userRepository.existsById(Mockito.anyInt())).thenReturn(true);
             Mockito.when(userRepository.save(Mockito.any())).thenReturn(user);
-            userService = new UserServiceImpl(userRepository);
 
-            assertEquals(
-                    userService.updateUser(userModel),
-                    userModel);
+            assertEquals(userService.updateUser(userModel), userModel);
         }
     }
 
     @Test
     public void whenUserIsContainedByEmailAddUserThrowsException() {
-        Mockito.when(userRepository.existsByEmail(userList.get(0).
-                getEmail())).thenReturn(true);
-        userService = new UserServiceImpl(userRepository);
+        Mockito.when(userRepository.existsByEmail(userList.get(0).getEmail())).thenReturn(true);
+        Mockito.when(userRepository.existsByUserName(userList.get(0).getUserName())).thenReturn(false);
 
-        assertThrows(
-                ResourceAlreadyExistsException.class,
-                () -> userService.addUser(userModelList.get(0)));
+        assertThrows(UserAlreadyExistsException.class, () -> userService.addUser(userModelList.get(0)));
     }
 
     @Test
     public void whenUserIsContainedByUserNameAddUserThrowsException() {
-        Mockito.when(userRepository.existsByUserName(userList.get(0).
-                getUserName())).thenReturn(true);
-        userService = new UserServiceImpl(userRepository);
+        Mockito.when(userRepository.existsByUserName(userList.get(0).getUserName())).thenReturn(true);
+        Mockito.when(userRepository.existsByEmail(userList.get(0).getEmail())).thenReturn(false);
 
-        assertThrows(
-                ResourceAlreadyExistsException.class,
-                () -> userService.addUser(userModelList.get(0)));
+        assertThrows(UserAlreadyExistsException.class, () -> userService.addUser(userModelList.get(0)));
+    }
+
+    @Test
+    public void whenUserIsContainedByUserNameAndByEmailAddUserThrowsException() {
+        Mockito.when(userRepository.existsByEmail(userList.get(0).getEmail())).thenReturn(true);
+        Mockito.when(userRepository.existsByUserName(userList.get(0).getUserName())).thenReturn(true);
+
+        assertThrows(UserAlreadyExistsException.class, () -> userService.addUser(userModelList.get(0)));
     }
 
     @Test
@@ -137,11 +127,8 @@ public class UserServiceImplTests extends BaseTestClass {
             Mockito.when(userRepository.existsByEmail(user.getEmail())).thenReturn(false);
             Mockito.when(userRepository.existsByUserName(user.getUserName())).thenReturn(false);
             Mockito.when(userRepository.save(Mockito.any())).thenReturn(user);
-            userService = new UserServiceImpl(userRepository);
 
-            assertEquals(
-                    userService.addUser(userModel),
-                    userModel);
+            assertEquals(userService.addUser(userModel), userModel);
         }
     }
 }

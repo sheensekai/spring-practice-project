@@ -3,8 +3,9 @@ package com.example.controller;
 import com.example.UserStatusEnum;
 import com.example.dto.UserDTO;
 import com.example.dto.UserStatusDTO;
-import com.example.exception.exists.ResourceAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.exists.UserAlreadyExistsException;
+import com.example.exception.notfound.StatusEnumDoesntExist;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.service.UserService;
@@ -27,7 +28,7 @@ public class UserController {
 
     @PostMapping("/")
     public UserDTO addUser(@RequestBody UserDTO userDTO)
-        throws ResourceAlreadyExistsException {
+        throws UserAlreadyExistsException {
         UserModel newUserModel = new UserModel(userDTO);
         newUserModel = this.userService.addUser(newUserModel);
 
@@ -39,10 +40,10 @@ public class UserController {
     public UserStatusDTO updateUserOnlineStatus(
             @RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "newStatus") String newStatus)
-        throws ResourceNotFoundException {
+        throws UserNotFoundException, StatusEnumDoesntExist {
         UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(newStatus);
         if (userStatusEnum == null) {
-            throw new ResourceNotFoundException("Enum for " + newStatus + " doesn't exist");
+            throw new StatusEnumDoesntExist("Enum for " + newStatus + " doesn't exist");
         }
 
         UserStatusModel updatedUserStatusModel = this.userStatusService.updateUserStatus(userId, userStatusEnum);
@@ -51,7 +52,7 @@ public class UserController {
 
     @GetMapping("/addUser")
     public UserDTO getUserById(@RequestParam(value = "userId") Integer userId)
-        throws ResourceNotFoundException {
+        throws UserNotFoundException {
         UserModel foundUserModel = this.userService.getUserByUserId(userId);
         return new UserDTO(foundUserModel);
     }
