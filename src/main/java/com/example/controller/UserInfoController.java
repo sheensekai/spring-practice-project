@@ -2,7 +2,9 @@ package com.example.controller;
 
 import com.example.dto.UserInfoDTO;
 import com.example.exception.exists.ResourceAlreadyExistsException;
+import com.example.exception.exists.UserInfoAlreadyExistsException;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserInfoNotFoundException;
 import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserInfoModel;
 import com.example.service.UserInfoService;
@@ -25,7 +27,7 @@ public class UserInfoController {
 
     @PostMapping("/{userId}")
     public UserInfoDTO addUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)
-        throws ResourceAlreadyExistsException {
+        throws UserNotFoundException, UserInfoAlreadyExistsException {
         UserInfoModel newUserInfoModel = new UserInfoModel(userInfoDTO);
         newUserInfoModel.setUserId(userId);
 
@@ -39,7 +41,7 @@ public class UserInfoController {
 
     @PutMapping("/{userId}")
     public UserInfoDTO updateUserInfo(@PathVariable(name = "userId") Integer userId, UserInfoDTO userInfoDTO)
-        throws ResourceNotFoundException {
+        throws UserNotFoundException, UserInfoNotFoundException {
         UserInfoModel updatedUserInfoModel = new UserInfoModel(userInfoDTO);
         updatedUserInfoModel.setUserId(userId);
 
@@ -53,7 +55,7 @@ public class UserInfoController {
 
     @GetMapping("/{userId}")
     public UserInfoDTO getUserInfo(@PathVariable(name = "userId") Integer userId)
-        throws ResourceNotFoundException {
+        throws UserNotFoundException, UserInfoNotFoundException {
 
         if (!userService.existsByUserId(userId)) {
             throw new UserNotFoundException("User with userId " + userId + " doesn't exist");

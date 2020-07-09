@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.GenderDTO;
+import com.example.exception.exists.GenderAlreadyExistsException;
 import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.model.GenderModel;
 import com.example.service.GenderService;
@@ -18,7 +19,7 @@ public class GenderController {
 
     @PostMapping("/")
     public GenderDTO addGender(@RequestBody GenderDTO genderDTO)
-            throws ResourceAlreadyExistsException {
+            throws GenderAlreadyExistsException {
         GenderModel newGenderModel = new GenderModel(genderDTO);
         newGenderModel = this.genderService.addGender(newGenderModel);
         return new GenderDTO(newGenderModel);
