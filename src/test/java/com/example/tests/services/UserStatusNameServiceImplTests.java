@@ -49,7 +49,7 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
                     .thenReturn(optionalUserStatusName);
 
             assertEquals(userStatusNameService
-                    .getStatusByStatusName(userStatusName.getStatusName()), userStatusNameModel);
+                    .getUserStatusNameByStatusName(userStatusName.getStatusName()), userStatusNameModel);
         }
     }
 
@@ -60,7 +60,7 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
                     .getStatusName())).thenThrow(UserStatusNameNotFoundException.class);
 
             assertThrows(UserStatusNameNotFoundException.class,
-                    () -> userStatusNameService.getStatusByStatusName(userStatusName.getStatusName()));
+                    () -> userStatusNameService.getUserStatusNameByStatusName(userStatusName.getStatusName()));
         }
     }
 
@@ -73,7 +73,7 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
 
             Mockito.when(userStatusNameRepository.findById(userStatusName.getStatusId())).thenReturn(optionalUserStatusName);
 
-            assertEquals(userStatusNameService.getStatusByStatusId(userStatusName.getStatusId()), userStatusNameModel);
+            assertEquals(userStatusNameService.getUserStatusNameByStatusId(userStatusName.getStatusId()), userStatusNameModel);
         }
     }
 
@@ -84,7 +84,7 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
                     .getStatusId())).thenThrow(UserStatusNameNotFoundException.class);
 
             assertThrows(UserStatusNameNotFoundException.class,
-                    () -> userStatusNameService.getStatusByStatusId(userStatusName.getStatusId()));
+                    () -> userStatusNameService.getUserStatusNameByStatusId(userStatusName.getStatusId()));
         }
     }
 
@@ -92,6 +92,6 @@ public class UserStatusNameServiceImplTests extends BaseTestClass {
     public void getAllStatusesReturnsAllTheStatuses() {
         Mockito.when(userStatusNameRepository.findAll()).thenReturn(userStatusNameList);
 
-        assertEquals(userStatusNameModelList, userStatusNameService.getAllStatuses());
+        assertEquals(userStatusNameModelList, userStatusNameService.getAllUserStatusNames());
     }
 }

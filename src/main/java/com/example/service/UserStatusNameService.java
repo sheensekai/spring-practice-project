@@ -7,9 +7,10 @@ import java.util.List;
 
 @Service
 public interface UserStatusNameService {
-    List<UserStatusNameModel> getAllStatuses();
-    UserStatusNameModel getStatusByStatusId(int statusId);
-    UserStatusNameModel getStatusByStatusName(String statusName);
+    List<UserStatusNameModel> getAllUserStatusNames();
+    UserStatusNameModel getUserStatusNameByStatusId(int statusId);
+    UserStatusNameModel getUserStatusNameByStatusName(String statusName);
+    UserStatusNameModel addUserStatusName(UserStatusNameModel userStatusNameModel);
 
     boolean existsByStatusId(int statusId);
 }

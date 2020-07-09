@@ -6,6 +6,7 @@ import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.model.UserStatusModel;
 import com.example.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class UserStatusController {
         this.userStatusService = userStatusService;
     }
 
-    @RequestMapping("/statistics")
+    @GetMapping("/statistics")
     public List<UserStatusDTO> getStatistics
             (@RequestParam(name = "userId", defaultValue = "null") Integer userId,
              @RequestParam(name = "onlineStatus", defaultValue = "null") String onlineStatus,

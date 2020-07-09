@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.entities.UserStatusName;
+import com.example.exception.exists.UserStatusNameAlreadyExistsException;
 import com.example.exception.notfound.UserStatusNameNotFoundException;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusNameRepository;
@@ -19,7 +20,19 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
         this.userStatusNameRepository = userStatusNameRepository;
     }
 
-    public List<UserStatusNameModel> getAllStatuses() {
+    public UserStatusNameModel addUserStatusName(UserStatusNameModel userStatusNameModel)
+        throws UserStatusNameAlreadyExistsException {
+        UserStatusName userStatusName = new UserStatusName(userStatusNameModel);
+        if (this.userStatusNameRepository.existsByStatusName(userStatusName.getStatusName())) {
+            throw new UserStatusNameAlreadyExistsException(
+                    "UserStatusName with StatusName " + userStatusName.getStatusName() + " already exists");
+        }
+
+        userStatusName = this.userStatusNameRepository.save(userStatusName);
+        return new UserStatusNameModel(userStatusName);
+    }
+
+    public List<UserStatusNameModel> getAllUserStatusNames() {
         List<UserStatusName> userStatusList = this.userStatusNameRepository.findAll();
         List<UserStatusNameModel> answer = new ArrayList<>();
         for (UserStatusName userStatusName : userStatusList) {
@@ -29,14 +42,14 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
         return answer;
     }
 
-    public UserStatusNameModel getStatusByStatusId(int statusId)
+    public UserStatusNameModel getUserStatusNameByStatusId(int statusId)
         throws UserStatusNameNotFoundException {
         UserStatusName userStatusName = this.userStatusNameRepository.findById(statusId)
                 .orElseThrow(() -> new UserStatusNameNotFoundException("UserStatusName with id " + statusId + " doesn't exist"));
         return new UserStatusNameModel(userStatusName);
     }
 
-    public UserStatusNameModel getStatusByStatusName(String statusName)
+    public UserStatusNameModel getUserStatusNameByStatusName(String statusName)
         throws UserStatusNameNotFoundException {
         UserStatusName userStatusName = this.userStatusNameRepository.findByStatusName(statusName)
                 .orElseThrow(() -> new UserStatusNameNotFoundException("UserStatusName with name " + statusName + " doesn't exist"));
@@ -46,4 +59,6 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
     public boolean existsByStatusId(int statusId) {
         return this.userStatusNameRepository.existsById(statusId);
     }
+
+    public boolean existsByStatusName(String statusName) { return this.userStatusNameRepository.existsByStatusName(statusName); }
 }

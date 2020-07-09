@@ -55,7 +55,7 @@ public class UserStatusServiceImpl implements UserStatusService {
 
     private UserStatus updateUserStatusStatisticsImpl(int userId, UserStatusEnum onlineStatus) {
         UserStatusNameModel userStatusName = this.userStatusNameService
-                .getStatusByStatusName(onlineStatus.toString().toLowerCase());
+                .getUserStatusNameByStatusName(onlineStatus.toString().toLowerCase());
 
         int statusId = userStatusName.getStatusId();
         long updateTime = System.currentTimeMillis();
@@ -76,7 +76,7 @@ public class UserStatusServiceImpl implements UserStatusService {
             return null;
         } else {
             UserStatusNameModel userStatusNameModel = this.userStatusNameService
-                    .getStatusByStatusName(onlineStatus.toString().toLowerCase());
+                    .getUserStatusNameByStatusName(onlineStatus.toString().toLowerCase());
             return userStatusNameModel.getStatusId();
         }
     }
@@ -107,7 +107,7 @@ public class UserStatusServiceImpl implements UserStatusService {
     private List<UserStatusModel> getStatisticsMakingAnswerImpl(List<UserStatus> userStatusList) {
         List<UserStatusModel> answer = new ArrayList<>();
         HashMap<Integer, UserStatusEnum> idToName = new HashMap<>();
-        List<UserStatusNameModel> allStatusNames = this.userStatusNameService.getAllStatuses();
+        List<UserStatusNameModel> allStatusNames = this.userStatusNameService.getAllUserStatusNames();
         for (UserStatusNameModel userStatusNameModel : allStatusNames) {
             UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(userStatusNameModel.getStatusName());
             if (userStatusEnum == null) {

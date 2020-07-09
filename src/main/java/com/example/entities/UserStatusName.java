@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import com.example.model.UserStatusNameModel;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -21,4 +22,8 @@ public class UserStatusName {
     @NonNull
     @Column
     private String statusName;
+
+    public UserStatusName(UserStatusNameModel userStatusNameModel) {
+        this(userStatusNameModel.getStatusId(), userStatusNameModel.getStatusName());
+    }
 }
