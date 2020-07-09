@@ -1,11 +1,8 @@
 package com.example.tests.services;
 
 import com.example.entities.UserInfo;
-import com.example.exception.exists.UserAlreadyExistsException;
 import com.example.exception.exists.UserInfoAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserInfoNotFoundException;
-import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;

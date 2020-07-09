@@ -5,8 +5,6 @@ import com.example.dto.UserDTO;
 import com.example.dto.UserStatusDTO;
 import com.example.exception.exists.UserAlreadyExistsException;
 import com.example.exception.notfound.StatusEnumDoesntExist;
-import com.example.exception.exists.ResourceAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;

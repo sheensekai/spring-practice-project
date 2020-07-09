@@ -1,9 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.UserInfoDTO;
-import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.exists.UserInfoAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserInfoNotFoundException;
 import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserInfoModel;

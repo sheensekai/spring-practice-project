@@ -1,9 +1,7 @@
 package com.example.service.impl;
 
 import com.example.entities.User;
-import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.exists.UserAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.repository.UserRepository;

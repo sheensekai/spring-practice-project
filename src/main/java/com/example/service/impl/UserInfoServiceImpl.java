@@ -1,9 +1,7 @@
 package com.example.service.impl;
 
 import com.example.entities.UserInfo;
-import com.example.exception.exists.ResourceAlreadyExistsException;
 import com.example.exception.exists.UserInfoAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserInfoNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;

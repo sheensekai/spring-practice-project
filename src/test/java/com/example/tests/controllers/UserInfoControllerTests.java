@@ -4,7 +4,6 @@ import com.example.GenderEnum;
 import com.example.controller.UserInfoController;
 import com.example.dto.UserInfoDTO;
 import com.example.exception.exists.UserInfoAlreadyExistsException;
-import com.example.exception.notfound.ResourceNotFoundException;
 import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserInfoModel;
 import com.example.service.impl.UserInfoServiceImpl;
