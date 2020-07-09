@@ -4,6 +4,7 @@ import com.example.UserStatusEnum;
 import com.example.entities.User;
 import com.example.entities.UserStatus;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserNotFoundException;
 import com.example.model.UserModel;
 import com.example.model.UserStatusModel;
 import com.example.model.UserStatusNameModel;
@@ -33,9 +34,10 @@ public class UserStatusServiceImpl implements UserStatusService {
         this.userService = userService;
     }
 
-    public UserStatusModel updateUserStatus(int userId, UserStatusEnum onlineStatus) {
+    public UserStatusModel updateUserStatus(int userId, UserStatusEnum onlineStatus)
+        throws UserNotFoundException {
         if (!this.userService.existsByUserId(userId)) {
-            throw new ResourceNotFoundException("User with id " + userId + " doesn't exist");
+            throw new UserNotFoundException("User with id " + userId + " doesn't exist");
         }
 
         UserStatus userStatus = this.updateUserStatusStatisticsImpl(userId, onlineStatus);

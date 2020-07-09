@@ -42,7 +42,7 @@ public class UserController {
     public UserStatusDTO updateUserOnlineStatus(
             @RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "newStatus") String newStatus)
-        throws UserNotFoundException {
+        throws UserNotFoundException, StatusEnumDoesntExist {
         UserStatusEnum userStatusEnum = UserStatusEnum.findEnum(newStatus);
         if (userStatusEnum == null) {
             throw new StatusEnumDoesntExist("Enum for " + newStatus + " doesn't exist");

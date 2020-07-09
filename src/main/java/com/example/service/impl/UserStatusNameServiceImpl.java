@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import com.example.entities.UserStatusName;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserStatusNameNotFoundException;
 import com.example.model.UserStatusNameModel;
 import com.example.repository.UserStatusNameRepository;
 import com.example.service.UserStatusNameService;
@@ -29,15 +30,17 @@ public class UserStatusNameServiceImpl implements UserStatusNameService {
         return answer;
     }
 
-    public UserStatusNameModel getStatusByStatusId(int statusId) {
+    public UserStatusNameModel getStatusByStatusId(int statusId)
+        throws UserStatusNameNotFoundException {
         UserStatusName userStatusName = this.userStatusNameRepository.findById(statusId)
-                .orElseThrow(() -> new ResourceNotFoundException("UserStatusName with id " + statusId + " doesn't exist"));
+                .orElseThrow(() -> new UserStatusNameNotFoundException("UserStatusName with id " + statusId + " doesn't exist"));
         return new UserStatusNameModel(userStatusName);
     }
 
-    public UserStatusNameModel getStatusByStatusName(String statusName) {
+    public UserStatusNameModel getStatusByStatusName(String statusName)
+        throws UserStatusNameNotFoundException {
         UserStatusName userStatusName = this.userStatusNameRepository.findByStatusName(statusName)
-                .orElseThrow(() -> new ResourceNotFoundException("UserStatusName with name " + statusName + " doesn't exist"));
+                .orElseThrow(() -> new UserStatusNameNotFoundException("UserStatusName with name " + statusName + " doesn't exist"));
         return new UserStatusNameModel(userStatusName);
     }
 

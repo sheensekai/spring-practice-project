@@ -2,7 +2,9 @@ package com.example.service.impl;
 
 import com.example.entities.UserInfo;
 import com.example.exception.exists.ResourceAlreadyExistsException;
+import com.example.exception.exists.UserInfoAlreadyExistsException;
 import com.example.exception.notfound.ResourceNotFoundException;
+import com.example.exception.notfound.UserInfoNotFoundException;
 import com.example.model.GenderModel;
 import com.example.model.UserInfoModel;
 import com.example.repository.UserInfoRepository;
@@ -25,9 +27,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         this.genderService = genderService;
     }
 
-    public UserInfoModel addUserInfo(UserInfoModel userInfoModel) {
+    public UserInfoModel addUserInfo(UserInfoModel userInfoModel)
+        throws UserInfoAlreadyExistsException {
         if (this.userInfoRepository.existsById(userInfoModel.getUserId())) {
-            throw new ResourceAlreadyExistsException("UserInfo with userId " + userInfoModel.getUserId() + " already exists");
+            throw new UserInfoAlreadyExistsException("UserInfo with userId " + userInfoModel.getUserId() + " already exists");
         }
 
         String genderString = userInfoModel.getGenderEnum().toString().toLowerCase();
@@ -38,9 +41,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         return new UserInfoModel(newUserInfo, genderString);
     }
 
-    public UserInfoModel getUserInfoByUserId(int userId) {
+    public UserInfoModel getUserInfoByUserId(int userId)
+        throws UserInfoNotFoundException {
         UserInfo userInfo = this.userInfoRepository.findById(userId)
-                .orElseThrow( () -> new ResourceNotFoundException("UserInfo with userId " + userId + " doesn't exist"));
+                .orElseThrow( () -> new UserInfoNotFoundException("UserInfo with userId " + userId + " doesn't exist"));
 
         GenderModel foundGenderModel = this.genderService.findGenderByGenderId(userId);
         String genderString = foundGenderModel.getGenderEnum().toString().toLowerCase();
